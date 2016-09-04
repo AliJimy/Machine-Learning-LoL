@@ -107,4 +107,6 @@ public class Machine extends Thread {
 		}
 		System.out.println();
 	}
+
+	public void
 }
