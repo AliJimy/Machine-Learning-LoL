@@ -51,14 +51,17 @@ public class Multi {
 				
 				xM = bestM.getX();
 				yM = bestM.getY();
+				m.upgradeCell(m.getCell(), bestM);
 				if (m.hasReachedToGoal())
 					break;
 				
 				xX = bestX.getX();
 				yX = bestX.getY();
-
+				x.upgradeCell(x.getCell(), bestX);
 				if (x.hasReachedToGoal())
 					break;
+				
+				x.showMultiMachine(m);
 			}
 			
 		}

@@ -33,6 +33,10 @@ public class Machine extends Thread {
 		return null;
 	}
 
+	public String getMachineName(){
+		return this.name;
+	}
+	
 	public void setCells(Cell[][] cells) {
 		this.cells = cells;
 	}
@@ -112,5 +116,24 @@ public class Machine extends Thread {
 		cells[prevCell.getY()][prevCell.getY()].setState("PASSED");
 		cells[nextCell.getY()][nextCell.getX()].setState("GOAL");
 		this.cell = nextCell;
+	}
+	
+	public void showMultiMachine(Machine machine){
+		char[][] show = new char[this.row][this.col];
+		
+		for(int i = 0; i < row; i++){
+			for(int j = 0; j < col; j++){
+				if(cells[i][j].getState().equals("PASSED"))
+					show[i][j] = name.charAt(0);
+				else if(machine.getCells()[i][j].equals("PASSED"))
+					show[i][j] = machine.getMachineName().charAt(0);
+				else if(machine.getCells()[i][j].equals("GOAL"))
+					show[i][j] = 'G';
+				else
+					show[i][j] = cells[i][j].getState().charAt(0);
+			}
+		}
+		
+		showPath(show);
 	}
 }
