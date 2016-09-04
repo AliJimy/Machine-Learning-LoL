@@ -39,7 +39,7 @@ public class Main {
 			int yRandom = (new Random().nextInt(ROW));
 
 			for (int j = 0; j < 1000; j++) {
-				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
+//				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
 				Cell bestCellToGo = cells[yRandom][xRandom]
 						.getBestAction(cells);
 				cells[yRandom][xRandom].calculatePoint(cells);
