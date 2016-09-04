@@ -65,7 +65,7 @@ public class Multi {
 
 		// Moving the Machine
 		m.setCell(startM);
-		//Ali J 
+		//Ali J  
 	}
 }
 // Chert o Pert
