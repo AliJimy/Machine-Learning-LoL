@@ -107,6 +107,10 @@ public class Machine extends Thread {
 		}
 		System.out.println();
 	}
-
-	public void
+	
+	public void upgradeCell(Cell prevCell, Cell nextCell){
+		cells[prevCell.getY()][prevCell.getY()].setState("PASSED");
+		cells[nextCell.getY()][nextCell.getX()].setState("GOAL");
+		this.cell = nextCell;
+	}
 }

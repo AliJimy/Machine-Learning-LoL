@@ -97,8 +97,12 @@ public class Cell {
 			reward = -100;
 		} else if (this.state.equals("GOAL")){
 			reward = 100; // this is for Goal
+		} else if (this.state.equals("PASSED")){
+			reward = -10;
+		} else if (this.state.equals("FOUND")){
+			reward = 10;
 		} else {
-			reward = 1;
+			reward = -1;
 		}
 		
 		return reward;
