@@ -127,9 +127,9 @@ public class Machine extends Thread {
 			for(int j = 0; j < col; j++){
 				if(cells[i][j].getState().equals("PASSED"))
 					show[i][j] = name.charAt(0);
-				else if(machine.getCells()[i][j].equals("PASSED"))
+				else if(machine.getCells()[i][j].getState().equals("PASSED"))
 					show[i][j] = machine.getMachineName().charAt(0);
-				else if(machine.getCells()[i][j].equals("GOAL"))
+				else if(machine.getCells()[i][j].getState().equals("GOAL"))
 					show[i][j] = 'G';
 				else
 					show[i][j] = cells[i][j].getState().charAt(0);

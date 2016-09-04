@@ -48,6 +48,7 @@ public class Multi {
 				
 				cells[yM][xM].calculatePoint(m.getCells());
 				cells[yX][xX].calculatePoint(x.getCells());
+				x.showMultiMachine(m);
 				
 				xM = bestM.getX();
 				yM = bestM.getY();
@@ -61,7 +62,6 @@ public class Multi {
 				if (x.hasReachedToGoal())
 					break;
 				
-				x.showMultiMachine(m);
 			}
 			
 		}
