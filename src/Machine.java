@@ -114,7 +114,6 @@ public class Machine extends Thread {
 	
 	public void upgradeCell(Cell prevCell, Cell nextCell, Machine machine){
 		cells[prevCell.getY()][prevCell.getY()].setState("PASSED");
-		cells[nextCell.getY()][nextCell.getX()].setState("EMPTY");
 		this.cell = nextCell;
 		machine.getCells()[prevCell.getY()][prevCell.getX()].setState("FOUND");
 		machine.getCells()[nextCell.getY()][nextCell.getX()].setState("GOAL");

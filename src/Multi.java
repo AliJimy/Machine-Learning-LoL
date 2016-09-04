@@ -6,27 +6,27 @@ public class Multi {
 	public static final int COL = 5;
 
 	public static void main(String[] args) {
-		Cell[][] cells = new Cell[ROW][COL];
-		int number = 1;
+		Cell[][] cellX = new Cell[ROW][COL];
+		Cell[][] cellM = new Cell[ROW][COL];
+		int number = 0;
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
-				cells[i][j] = new Cell("EMPTY", number++);
+				number++;
+				cellX[i][j] = new Cell("EMPTY", number);
+				cellM[i][j] = new Cell("EMPTY", number);
 			}
 		}
 
-		cells[0][1].setState("BARRIER");
-
-		cells[0][2].setState("GOAL");
-
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
-				cells[i][j].setSurroundingCells(cells);
+				cellX[i][j].setSurroundingCells(cellX);
+				cellM[i][j].setSurroundingCells(cellM);
 			}
 		}
 
-		Machine m = new Machine(cells, "mac");
+		Machine m = new Machine(cellX, "mac");
 		Cell startM = new Cell("EMPTY", 3);
-		Machine x = new Machine(cells, "kos");
+		Machine x = new Machine(cellM, "xsher");
 		Cell startX = new Cell("EMPTY", 24);
 
 		// Start Learning
@@ -43,11 +43,11 @@ public class Multi {
 			int yX = x.getCell().getY();
 
 			while (true) {
-				Cell bestM = cells[yM][xM].getBestAction(m.getCells());
-				Cell bestX = cells[yX][xX].getBestAction(x.getCells());
+				Cell bestM = m.getCells()[yM][xM].getBestAction(m.getCells());
+				Cell bestX = x.getCells()[yX][xX].getBestAction(x.getCells());
 				
-				cells[yM][xM].calculatePoint(m.getCells());
-				cells[yX][xX].calculatePoint(x.getCells());
+				m.getCells()[yM][xM].calculatePoint(m.getCells());
+				x.getCells()[yX][xX].calculatePoint(x.getCells());
 				x.showMultiMachine(m);
 				
 				xM = bestM.getX();
