@@ -10,11 +10,11 @@ public class Machine extends Thread {
 	private int row;
 	private int col;
 
-	public Machine(Cell[][] cls, String name) {
+	public Machine(String name) {
 		this.name = name;
 		this.row = Main.ROW;
 		this.col = Main.COL;
-		this.cells = cls;
+		this.setUpCells();
 	}
 
 	public void run() {
@@ -113,7 +113,7 @@ public class Machine extends Thread {
 	}
 	
 	public void upgradeCell(Cell prevCell, Cell nextCell, Machine machine){
-		cells[prevCell.getY()][prevCell.getY()].setState("PASSED");
+		cells[prevCell.getY()][prevCell.getX()].setState("PASSED");
 		this.cell = nextCell;
 		machine.getCells()[prevCell.getY()][prevCell.getX()].setState("FOUND");
 		machine.getCells()[nextCell.getY()][nextCell.getX()].setState("GOAL");
@@ -136,5 +136,25 @@ public class Machine extends Thread {
 		}
 		
 		showPath(show);
+	}
+
+	public void setUpCells() {
+		cells = new Cell[row][col];
+		int number = 0;
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				number++;
+				cells[i][j] = new Cell("EMPTY", number);
+			}
+		}
+
+		cells[2][2].setState("BARRIER");
+		cells[2][3].setState("BARRIER");
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				cells[i][j].setSurroundingCells(cells);
+			}
+		}
 	}
 }

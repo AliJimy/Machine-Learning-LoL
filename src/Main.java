@@ -30,7 +30,7 @@ public class Main {
 			}
 		}
 
-		Machine m = new Machine(cells, "mac");
+//		Machine m = new Machine(cells, "mac");
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
@@ -67,7 +67,7 @@ public class Main {
 		}
 
 		// Moving the Machine
-		showBestPath(m, cells[0][0]);
+//		showBestPath(m, cells[0][0]);
 	}
 
 	private static void showBestPath(Machine machine, Cell startCell) {

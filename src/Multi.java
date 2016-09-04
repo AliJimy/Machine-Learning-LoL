@@ -6,27 +6,10 @@ public class Multi {
 	public static final int COL = 5;
 
 	public static void main(String[] args) {
-		Cell[][] cellX = new Cell[ROW][COL];
-		Cell[][] cellM = new Cell[ROW][COL];
-		int number = 0;
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
-				number++;
-				cellX[i][j] = new Cell("EMPTY", number);
-				cellM[i][j] = new Cell("EMPTY", number);
-			}
-		}
 
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
-				cellX[i][j].setSurroundingCells(cellX);
-				cellM[i][j].setSurroundingCells(cellM);
-			}
-		}
-
-		Machine m = new Machine(cellX, "mac");
+		Machine m = new Machine("mac");
 		Cell startM = new Cell("EMPTY", 3);
-		Machine x = new Machine(cellM, "xsher");
+		Machine x = new Machine("xsher");
 		Cell startX = new Cell("EMPTY", 24);
 
 		// Start Learning
