@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * Created by Future on 8/26/2016.
  */
@@ -191,6 +194,7 @@ public class Cell {
 
 	private Cell chooseNearestCellToGoal(Cell[] suggestedCells, Cell[][] cells) {
 		Cell goal = null;
+
 		for (int i = 0; i < Main.ROW; i++) {
 			for (int j = 0; j < Main.COL; j++) {
 				if (cells[i][j].getState().equals("GOAL")) {
@@ -214,11 +218,12 @@ public class Cell {
 				min = distances[i];
 			}
 		}
+		ArrayList<Cell> bestCells = new ArrayList<>();
 		for (int i = 0; i < distances.length; i++) {
 			if (min == distances[i]) {
-				return suggestedCells[i];
+				bestCells.add(suggestedCells[i]);
 			}
 		}
-		return null;
+		return bestCells.get(new Random().nextInt(bestCells.size()));
 	}
 }

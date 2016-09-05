@@ -148,8 +148,8 @@ public class Machine extends Thread {
 			}
 		}
 
-		cells[2][2].setState("BARRIER");
-		cells[2][3].setState("BARRIER");
+//		cells[2][2].setState("BARRIER");
+//		cells[1][1].setState("BARRIER");
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
@@ -157,4 +157,29 @@ public class Machine extends Thread {
 			}
 		}
 	}
+
+	public double getDistanceFrom(Cell cell){
+		return Math.sqrt(Math.pow(this.cell.getX() - cell.getX(), 2) + Math.pow(this.cell.getY() - cell.getY(), 2));
+	}
+
+	public boolean isGoal(Cell cell){
+		if (cell.getState().equals("GOAL"))
+			return true;
+		return false;
+	}
+
+	public boolean isBarrier(Cell cell){
+		if(cell.getState().equals("BARRIER"))
+			return true;
+
+		return false;
+	}
+
+	public boolean isEmpty(Cell cell){
+		if(cell.getState().equals("EMPTY"))
+			return true;
+
+		return false;
+	}
+
 }
