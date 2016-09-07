@@ -208,7 +208,8 @@ public class Machine extends Thread {
 	}
 
 	public void setCell(Cell cell) {
-		this.cell = cell;
+		this.cell = this.cells[cell.getY()][cell.getX()];
+
 	}
 	
 	public Cell getCell(){

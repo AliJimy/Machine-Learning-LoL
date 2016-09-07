@@ -84,21 +84,21 @@ public class Cell {
 		Cell opponentCell = machine.getOpponent().getCell();
 		double maxPoint = -1000000.0;
 		for (int i = 0; i < opponentCell.actions.length; i++) {
-			if (maxPoint < this.actions[i].getPoint()
-					&& this.actions[i].getFinalCell() != null
-					&& !this.actions[i].getFinalCell().isOut()
-					&& !this.actions[i].getFinalCell().isBarrier()) {
-				maxPoint = this.actions[i].getPoint();
+			if (maxPoint < opponentCell.actions[i].getPoint()
+					&& opponentCell.actions[i].getFinalCell() != null
+					&& !opponentCell.actions[i].getFinalCell().isOut()
+					&& !opponentCell.actions[i].getFinalCell().isBarrier()) {
+				maxPoint = opponentCell.actions[i].getPoint();
 			}
 		}
 		Cell[] cls = new Cell[4];
 		int num = 0;
 		for (int i = 0; i < opponentCell.actions.length; i++) {
-			if (this.actions[i].getPoint() == maxPoint
-					&& this.actions[i].getFinalCell() != null
-					&& !this.actions[i].getFinalCell().isOut()
-					&& !this.actions[i].getFinalCell().isBarrier()) {
-				cls[num++] = this.actions[i].getFinalCell();
+			if (opponentCell.actions[i].getPoint() == maxPoint
+					&& opponentCell.actions[i].getFinalCell() != null
+					&& !opponentCell.actions[i].getFinalCell().isOut()
+					&& !opponentCell.actions[i].getFinalCell().isBarrier()) {
+				cls[num++] = opponentCell.actions[i].getFinalCell();
 			}
 		}
 		ArrayList<Cell> nearestCellsToThis = this.chooseNearestCellTo(this, cls);
