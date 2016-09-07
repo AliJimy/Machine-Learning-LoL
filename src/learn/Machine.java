@@ -3,9 +3,6 @@ package learn;
 import elements.Cell;
 import elements.Parameters;
 
-/**
- * Created by Future on 8/26/2016.
- */
 public class Machine extends Thread {
 	private final String name;
 	private Machine opponent;
@@ -72,8 +69,7 @@ public class Machine extends Thread {
 				nextCell = this.cell.getNextState(nextCell);
 			}
 			
-			upgradeCell(nextCell, this);
-			this.cell = nextCell;
+			upgradeCell(this.cell, nextCell);
 			showPath();
 		}
 	}
@@ -93,13 +89,13 @@ public class Machine extends Thread {
 		showPath(path);
 	}
 	
-	public void upgradeCell(Cell nextCell, Machine machine){
-		setEmpty(cell);
-		machine.setEmpty(cell);
+	public void upgradeCell(Cell prevCell, Cell nextCell){
+		setEmpty(prevCell);
+		opponent.setEmpty(prevCell);
 		
 		this.cell = nextCell;
 		
-		machine.setGoal(this.cell);
+		opponent.setGoal(nextCell);
 	}
 	
 	public void showMultiMachine(Machine machine){

@@ -18,6 +18,9 @@ public class Multi {
 
 		m.setOpponent(x);
 		x.setOpponent(m);
+		
+		m.setOpponent(x);
+		x.setOpponent(m);
 
 
 		// Start Learning
@@ -45,31 +48,21 @@ public class Multi {
 			Cell startX = new Cell("EMPTY", 18, x);
 			m.setCell(startM);
 			x.setCell(startX);
-
-			int xM = m.getCell().getX();
-			int yM = m.getCell().getY();
-			
-			int xX = x.getCell().getX();
-			int yX = x.getCell().getY();
+			m.setGoal(startX);
+			x.setGoal(startM);
 
 			while (true) {
-				Cell bestM = m.getCells()[yM][xM].getBestAction();
-				Cell bestX = x.getCells()[yX][xX].getBestAction();
+				Cell bestM = m.getCell().getBestAction();
+				Cell thisM = m.getCell();
+				Cell bestX = x.getCell().getBestAction();
+				Cell thisX = x.getCell();
 
-				xX = bestX.getX();
-				yX = bestX.getY();
-				x.upgradeCell(bestX, m);
+				x.upgradeCell(thisX, bestX);
+				m.upgradeCell(thisM, bestM);
 
-				xM = bestM.getX();
-				yM = bestM.getY();
-				m.upgradeCell(bestM, x);
+				x.getCell().calculatePoint();
+				m.getCell().calculatePoint();
 
-				x.getCells()[yX][xX].calculatePoint();
-				m.getCells()[yM][xM].calculatePoint();
-
-				if (m.hasReachedToGoal() || x.hasReachedToGoal())
-					break;
-				
 				if(m.hasReachedToGoal(x) || x.hasReachedToGoal(m))
 					break;
 			}
