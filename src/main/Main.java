@@ -13,7 +13,7 @@ public class Main {
 		
 		Random random = new Random();
 		
-		Machine m = new Machine("mac");
+		Machine m = new Machine("mac", null);
 		m.setUpCells();
 		m.setGoal(4, 4);
 		m.setBarrier(3, 3);

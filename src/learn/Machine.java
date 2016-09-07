@@ -8,6 +8,7 @@ import elements.Parameters;
  */
 public class Machine extends Thread {
 	private final String name;
+	private Machine opponent;
 
 	private Cell cell;
 	private Cell[][] cells;
@@ -15,7 +16,8 @@ public class Machine extends Thread {
 	private int row;
 	private int col;
 
-	public Machine(String name) {
+	public Machine(String name, Machine opponent) {
+		this.opponent = opponent;
 		this.name = name;
 		this.row = Parameters.ROW;
 		this.col = Parameters.COL;
@@ -226,5 +228,13 @@ public class Machine extends Thread {
 		}
 		
 		return null;
+	}
+
+	public void setOpponent(Machine opponent) {
+		this.opponent = opponent;
+	}
+
+	public Machine getOpponent() {
+		return opponent;
 	}
 }
