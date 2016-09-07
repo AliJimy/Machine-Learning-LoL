@@ -1,3 +1,8 @@
+package learn;
+
+import elements.Cell;
+import elements.Parameters;
+
 /**
  * Created by Future on 8/26/2016.
  */
@@ -12,8 +17,8 @@ public class Machine extends Thread {
 
 	public Machine(String name) {
 		this.name = name;
-		this.row = Main.ROW;
-		this.col = Main.COL;
+		this.row = Parameters.ROW;
+		this.col = Parameters.COL;
 		this.setUpCells();
 	}
 

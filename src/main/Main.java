@@ -1,17 +1,20 @@
+package main;
+
 import java.util.Random;
 
-/**
- * Created by Future on 8/26/2016.
- */
-public class Main {
-	public static final int ROW = 5;
-	public static final int COL = 5;
+import learn.Machine;
+import elements.Cell;
+import elements.Parameters;
 
+public class Main {
 	public static void main(String[] args) {
-		Cell[][] cells = new Cell[ROW][COL];
+		int row = Parameters.ROW;
+		int col = Parameters.COL;
+		
+		Cell[][] cells = new Cell[row][col];
 		int number = 1;
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
 				cells[i][j] = new Cell("EMPTY", number++);
 			}
 		}
@@ -24,8 +27,8 @@ public class Main {
 
 		cells[0][2].setState("GOAL");
 
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
 				cells[i][j].setSurroundingCells(cells);
 			}
 		}
@@ -35,8 +38,8 @@ public class Main {
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i = " + i);
-			int xRandom = (new Random().nextInt(COL));
-			int yRandom = (new Random().nextInt(ROW));
+			int xRandom = (new Random().nextInt(col));
+			int yRandom = (new Random().nextInt(row));
 
 			for (int j = 0; j < 1000; j++) {
 				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
@@ -48,9 +51,9 @@ public class Main {
 			}
 		}
 
-		double[][][] pointsTable = new double[ROW][COL][4];
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
+		double[][][] pointsTable = new double[row][col][4];
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
 				for (int k = 0; k < 4; k++) {
 					pointsTable[i][j][k] = cells[i][j].getActions()[k]
 							.getPoint();
@@ -58,8 +61,8 @@ public class Main {
 			}
 		}
 		for (int k = 0; k < 4; k++) {
-			for (int i = 0; i < ROW; i++) {
-				for (int j = 0; j < COL; j++) {
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
 					System.out.printf("%f\t", pointsTable[i][j][k]);
 				}
 				System.out.println();

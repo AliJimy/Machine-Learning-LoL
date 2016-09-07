@@ -1,17 +1,18 @@
-import java.util.Random;
+package main;
 
-/**
- * Created by Future on 8/26/2016.
- */
+import elements.Cell;
+import elements.Parameters;
+import learn.Chain;
+import learn.Machine;
+
 public class Multi {
-	public static final int ROW = 5;
-	public static final int COL = 5;
-
 	public static void main(String[] args) {
+		int row = Parameters.ROW;
+		int col = Parameters.COL;
 
 		Machine m = new Machine("mac");
 		Machine x = new Machine("xsher");
-		double[][][] points = new double[ROW][COL][4];
+		double[][][] points = new double[row][col][4];
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
@@ -74,8 +75,8 @@ public class Multi {
 		}
 
 
-		for(int i = 0;i < ROW;i++) {
-			for(int j = 0;j < COL;j++) {
+		for(int i = 0;i < row;i++) {
+			for(int j = 0;j < col;j++) {
 				for(int k = 0;k < 4;k++) {
 
 				}
@@ -84,8 +85,8 @@ public class Multi {
 
 		for(int k = 0;k < 4;k++) {
 			System.out.printf("k: %d\n", k);
-			for (int i = 0; i < ROW; i++) {
-				for (int j = 0; j < COL; j++) {
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
 					System.out.print(points[i][j][k] + "\t");
 				}
 				System.out.println();

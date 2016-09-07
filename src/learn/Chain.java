@@ -1,4 +1,9 @@
+package learn;
+
 import java.util.ArrayList ;
+
+import elements.Cell;
+import elements.Parameters;
 
 /**
  * Created by Future on 8/31/16.
@@ -18,7 +23,7 @@ public class Chain {
 	// Functions
 	private void calculateTotalPoint() {
 		this.totalPoint = 0;
-		for (int i = 0; i < Main.ROW - 1; i++) {
+		for (int i = 0; i < Parameters.ROW - 1; i++) {
 			// double point = cells.get(i).getRewardForNextCell(cells.get(i +
 			// 1));
 			// this.totalPoint += point;

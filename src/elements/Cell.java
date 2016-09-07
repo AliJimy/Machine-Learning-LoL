@@ -1,17 +1,18 @@
+package elements;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Future on 8/26/2016.
- */
+import learn.Action;
+
 public class Cell {
 	private String state;
-	
+
 	private Cell up;
 	private Cell left;
 	private Cell right;
 	private Cell down;
-	
+
 	private int number;
 	private int x;
 	private int y;
@@ -24,8 +25,8 @@ public class Cell {
 		if (number < 0) {
 			return;
 		} else {
-			this.x = (this.number - 1) % Main.COL;
-			this.y = (this.number - 1) / Main.COL;
+			this.x = (this.number - 1) % Parameters.COL;
+			this.y = (this.number - 1) / Parameters.COL;
 		}
 	}
 
@@ -45,9 +46,9 @@ public class Cell {
 		Cell out = new Cell("OUT", -1);
 
 		this.left = (x == 0) ? out : (cells[y][x - 1]);
-		this.right = (x == Main.COL - 1) ? out : (cells[y][x + 1]);
+		this.right = (x == Parameters.COL - 1) ? out : (cells[y][x + 1]);
 		this.up = (y == 0) ? out : (cells[y - 1][x]);
-		this.down = (y == Main.ROW - 1) ? out : (cells[y + 1][x]);
+		this.down = (y == Parameters.ROW - 1) ? out : (cells[y + 1][x]);
 		this.setActions();
 	}
 
@@ -57,11 +58,12 @@ public class Cell {
 			if (maxPoint < this.actions[i].getPoint()
 					&& this.actions[i].getFinalCell() != null
 					&& !this.actions[i].getFinalCell().getState().equals("OUT")
-					&& !this.actions[i].getFinalCell().getState().equals("BARRIER")) {
+					&& !this.actions[i].getFinalCell().getState()
+							.equals("BARRIER")) {
 				maxPoint = this.actions[i].getPoint();
 			}
 		}
-		
+
 		Cell[] cls = new Cell[4];
 		int num = 0;
 		for (int i = 0; i < this.actions.length; i++) {
@@ -98,16 +100,16 @@ public class Cell {
 			reward = -1;
 		} else if (this.state.equals("OUT")) {
 			reward = -100;
-		} else if (this.state.equals("GOAL")){
+		} else if (this.state.equals("GOAL")) {
 			reward = 100; // this is for Goal
-		} else if (this.state.equals("PASSED")){
+		} else if (this.state.equals("PASSED")) {
 			reward = -10;
-		} else if (this.state.equals("FOUND")){
+		} else if (this.state.equals("FOUND")) {
 			reward = 10;
 		} else {
 			reward = -1;
 		}
-		
+
 		return reward;
 	}
 
@@ -195,8 +197,8 @@ public class Cell {
 	private Cell chooseNearestCellToGoal(Cell[] suggestedCells, Cell[][] cells) {
 		Cell goal = null;
 
-		for (int i = 0; i < Main.ROW; i++) {
-			for (int j = 0; j < Main.COL; j++) {
+		for (int i = 0; i < Parameters.ROW; i++) {
+			for (int j = 0; j < Parameters.COL; j++) {
 				if (cells[i][j].getState().equals("GOAL")) {
 					goal = cells[i][j];
 					break;
