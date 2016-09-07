@@ -68,7 +68,10 @@ public class Machine extends Thread {
 
 			if (!nextCell.isGoal() && !chain.isNextCellACorrectChoice(nextCell)) {
 				nextCell = this.cell.getNextState(nextCell);
-			}
+                if (!nextCell.isGoal() && !chain.isNextCellACorrectChoice(nextCell)) {
+                    nextCell = this.cell.getNextState(nextCell);
+                }
+            }
 
             this.cell = nextCell;
             showPath();
