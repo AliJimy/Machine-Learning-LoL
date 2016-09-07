@@ -92,5 +92,7 @@ public class Multi {
 			x.showMultiMachine(m);
 			m.showMultiMachine(x);
 		}
+
+
 	}
 }
