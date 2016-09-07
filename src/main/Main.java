@@ -27,9 +27,8 @@ public class Main {
 
 			for (int j = 0; j < 1000; j++) {
 //				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
-				Cell bestCellToGo = m.getCells()[yRandom][xRandom]
-						.getBestAction(m);
-				m.getCells()[yRandom][xRandom].calculatePoint(m);
+				Cell bestCellToGo = m.getCells()[yRandom][xRandom].getBestAction();
+				m.getCells()[yRandom][xRandom].calculatePoint();
 				xRandom = bestCellToGo.getX();
 				yRandom = bestCellToGo.getY();
 			}

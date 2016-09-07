@@ -23,14 +23,14 @@ public class Multi {
 			System.out.println("i = " + i);
 			
 			while(m.getGoal() == null) {
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1);
+				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
 				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
 					x.setCell(cell);
 					m.setGoal(x.getCell());
 				}
 			}
 			while(x.getGoal() == null){
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1);
+				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
 				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
 					m.setCell(cell);
 					x.setGoal(m.getCell());
@@ -44,8 +44,8 @@ public class Multi {
 			int yX = x.getCell().getY();
 
 			while (true) {
-				Cell bestM = m.getCells()[yM][xM].getBestAction(m);
-				Cell bestX = x.getCells()[yX][xX].getBestAction(x);
+				Cell bestM = m.getCells()[yM][xM].getBestAction();
+				Cell bestX = x.getCells()[yX][xX].getBestAction();
 
 				xX = bestX.getX();
 				yX = bestX.getY();
@@ -55,8 +55,8 @@ public class Multi {
 				yM = bestM.getY();
 				m.upgradeCell(bestM, x);
 
-				x.getCells()[yX][xX].calculatePoint(x);
-				m.getCells()[yM][xM].calculatePoint(m);
+				x.getCells()[yX][xX].calculatePoint();
+				m.getCells()[yM][xM].calculatePoint();
 
 				if (m.hasReachedToGoal() || x.hasReachedToGoal())
 					break;

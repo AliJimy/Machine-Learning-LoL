@@ -9,6 +9,8 @@ import learn.Machine;
 public class Cell {
 	private String state;
 
+	private Machine machine;
+	
 	private Cell up;
 	private Cell left;
 	private Cell right;
@@ -19,8 +21,9 @@ public class Cell {
 	private int y;
 	private Action[] actions; // 0: Up, 1: Right, 2: Down, 3: Left
 
-	public Cell(String state, int number) {
+	public Cell(String state, int number, Machine machine) {
 		this.actions = new Action[4];
+		this.machine = machine;
 		this.state = state;
 		this.number = number;
 		if (number < 0) {
@@ -43,9 +46,9 @@ public class Cell {
 		}
 	}
 
-	public void setSurroundingCells(Machine machine) {
+	public void setSurroundingCells() {
 		Cell[][] cells = machine.getCells();
-		Cell out = new Cell("OUT", -1);
+		Cell out = new Cell("OUT", -1, machine);
 
 		this.left = (x == 0) ? out : (cells[y][x - 1]);
 		this.right = (x == Parameters.COL - 1) ? out : (cells[y][x + 1]);
@@ -54,7 +57,7 @@ public class Cell {
 		this.setActions();
 	}
 
-	public Cell getBestAction(Machine machine) {
+	public Cell getBestAction() {
 		double maxPoint = -1000000.0;
 		for (int i = 0; i < this.actions.length; i++) {
 			if (maxPoint < this.actions[i].getPoint()
@@ -75,7 +78,7 @@ public class Cell {
 				cls[num++] = this.actions[i].getFinalCell();
 			}
 		}
-		return this.chooseNearestCellToGoal(cls, machine);
+		return this.chooseNearestCellToGoal(cls);
 	}
 
 	public Cell getNewState(double bestAction) {
@@ -124,8 +127,8 @@ public class Cell {
 		return y;
 	}
 
-	public void calculatePoint(Machine machine) {
-		Cell bestAcion = this.getBestAction(machine);
+	public void calculatePoint() {
+		Cell bestAcion = this.getBestAction();
 		for (int i = 0; i < this.actions.length; i++) {
 			if (actions[i].getFinalCell().equals(bestAcion)
 					&& !actions[i].getFinalCell().isBarrier()
@@ -193,7 +196,7 @@ public class Cell {
 		return cells;
 	}
 
-	private Cell chooseNearestCellToGoal(Cell[] suggestedCells, Machine machine) {
+	private Cell chooseNearestCellToGoal(Cell[] suggestedCells) {
 		Cell goal = machine.getGoal();
 		
 		if(goal == null) {

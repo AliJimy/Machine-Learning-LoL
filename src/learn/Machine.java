@@ -64,7 +64,7 @@ public class Machine extends Thread {
 				chain.addCell(this.cell);
 			}
 
-			Cell nextCell = this.cell.getBestAction(this);
+			Cell nextCell = this.cell.getBestAction();
 
 			if (!nextCell.isGoal() && !chain.isNextCellACorrectChoice(nextCell)) {
 				nextCell = this.cell.getNextState(nextCell);
@@ -81,8 +81,7 @@ public class Machine extends Thread {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if(cells[i][j].equals(cell)){
-					path[i][j] = getName().toUpperCase().charAt(0);
-					String name = getName();
+					path[i][j] = getMachineName().toUpperCase().charAt(0);
 				}
 				else
 					path[i][j] = cells[i][j].getState().charAt(0);
@@ -143,7 +142,7 @@ public class Machine extends Thread {
 		int number = 0;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				cells[i][j] = new Cell("EMPTY", ++number);
+				cells[i][j] = new Cell("EMPTY", ++number, this);
 			}
 		}
 
@@ -153,7 +152,7 @@ public class Machine extends Thread {
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				cells[i][j].setSurroundingCells(this);
+				cells[i][j].setSurroundingCells();
 			}
 		}
 	}

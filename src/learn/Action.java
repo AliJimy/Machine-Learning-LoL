@@ -21,7 +21,7 @@ public class Action {
 
     public void calculatePoint(Machine machine) {
         this.setPoint(this.point + alpha * (finalCell.getReward() +
-        		(gamma * sourceCell.getBestAction(machine).getReward()) - this.point));
+        		(gamma * sourceCell.getBestAction().getReward()) - this.point));
         this.numberOfCalls++;
     }
 
