@@ -12,24 +12,22 @@ public class Main {
 		int col = Parameters.COL;
 
 		Random random = new Random();
-
 		Machine m = new Machine("mac", null);
 		m.setUpCells();
-		m.setGoal(4, 4);
 		m.setBarrier(3, 3);
-		m.setBarrier(4, 3);
 		m.setBarrier(2, 3);
-
+		
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i = " + i);
+			
 			while (m.getCell() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
 				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
 					m.setCell(cell);
 				}
 			}
-			
+
 			while (m.getGoal() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
 				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
@@ -37,11 +35,12 @@ public class Main {
 				}
 			}
 
-			for (int j = 0; j < 1000; j++) {
+			while (m.hasReachedToGoal()) {
 				// System.out.println(j + "\t" + xRandom + "\t" + yRandom);
 				Cell bestCellToGo = m.getCell().getBestAction();
 				m.getCell().calculatePoint();
 				m.setCell(bestCellToGo);
+				m.showPath();
 			}
 		}
 
