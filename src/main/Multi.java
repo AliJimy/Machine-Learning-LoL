@@ -81,6 +81,7 @@ public class Multi {
 					break;
 				
 				x.showMultiMachine(m);
+				
 				m.showMultiMachine(x);
 			}
 			
