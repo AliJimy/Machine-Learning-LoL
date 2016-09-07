@@ -110,7 +110,7 @@ public class Machine extends Thread {
 				else if(cell.getX() == j && cell.getY() == i)
 					show[i][j] = name.toUpperCase().charAt(0);
 				else if(machine.getCell().getX() == j && machine.getCell().getY() == i)
-					show[i][j] = machine.getName().toUpperCase().charAt(0);
+					show[i][j] = machine.getMachineName().toUpperCase().charAt(0);
 				else
 					show[i][j] = cells[i][j].getState().charAt(0);
 			}
