@@ -19,6 +19,10 @@ public class Multi {
 
 		m.setOpponent(x);
 		x.setOpponent(m);
+		
+		m.setOpponent(x);
+		x.setOpponent(m);
+
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
@@ -43,6 +47,13 @@ public class Multi {
 				}
 			}
 
+//			Cell startM = new Cell("EMPTY", 8, m);
+//			Cell startX = new Cell("EMPTY", 18, x);
+//			m.setCell(startM);
+//			x.setCell(startX);
+//			m.setGoal(startX);
+//			x.setGoal(startM);
+
 			chainM.addCell(m.getCell());
 			chainX.addCell(x.getCell());
 
@@ -64,9 +75,6 @@ public class Multi {
 
 				x.getCell().calculatePoint();
 				m.getCell().calculatePoint();
-				
-				x.showMultiMachine(m);
-				m.showMultiMachine(x);
 
 				if(m.hasReachedToGoal(x) || x.hasReachedToGoal(m))
 					break;

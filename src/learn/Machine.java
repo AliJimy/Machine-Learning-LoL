@@ -93,7 +93,7 @@ public class Machine extends Thread {
 		setEmpty(prevCell);
 		opponent.setEmpty(prevCell);
 		
-		setCell(nextCell);
+		this.setCell(nextCell);
 		
 		opponent.setGoal(nextCell);
 	}
@@ -212,11 +212,13 @@ public class Machine extends Thread {
 	}
 
 	public void setCell(Cell cell) {
-		int x = cell.getX();
-		int y = cell.getY();
-		cells[y][x].setState(cell.getState());
-		this.cell = cells[y][x];
-	}
+        int x = cell.getX();
+        int y = cell.getY();
+        cells[y][x].setState(cell.getState());
+        this.cell = cells[y][x];
+
+
+    }
 	
 	public Cell getCell(){
 		return this.cell;
