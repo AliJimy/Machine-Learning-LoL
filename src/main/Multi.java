@@ -11,7 +11,7 @@ public class Multi {
 	public static void main(String[] args) {
 		int row = Parameters.ROW;
 		int col = Parameters.COL;
-		
+
 		Random random = new Random();
 
 		Machine m = new Machine("mac", null);
@@ -19,10 +19,9 @@ public class Multi {
 
 		m.setOpponent(x);
 		x.setOpponent(m);
-		
+
 		m.setOpponent(x);
 		x.setOpponent(m);
-
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
@@ -31,17 +30,17 @@ public class Multi {
 			m.setUpCells();
 			x.setUpCells();
 			System.out.println("i = " + i);
-			
-			while(m.getGoal() == null) {
+
+			while (m.getGoal() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
-				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
+				if (x.getCells()[cell.getY()][cell.getX()].isEmpty()) {
 					x.setCell(cell);
 					m.setGoal(x.getCell());
 				}
 			}
-			while(x.getGoal() == null){
+			while (x.getGoal() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
-				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
+				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
 					m.setCell(cell);
 					x.setGoal(m.getCell());
 				}
@@ -74,15 +73,14 @@ public class Multi {
 					break;
 				}
 				m.showMultiMachine(x);
-				
-				if(x.hasReachedToGoal(m))
+
+				if (x.hasReachedToGoal(m))
 					break;
 			}
-			
+
 			x.showMultiMachine(m);
 			m.showMultiMachine(x);
 		}
-
 
 	}
 }

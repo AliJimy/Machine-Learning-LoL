@@ -45,19 +45,19 @@ public class Machine extends Thread {
 		return false;
 	}
 
-	public boolean hasReachedToGoal(Machine machine){
-		if(this.cell.equals(machine.getCell()))
+	public boolean hasReachedToGoal(Machine machine) {
+		if (this.cell.equals(machine.getCell()))
 			return true;
-		
+
 		return false;
 	}
-	
+
 	public void findBestChain() {
 		Chain chain = new Chain();
-		
+
 		System.out.printf("First map:\n");
 		showPath();
-		
+
 		while (!hasReachedToGoal()) {
 			if (!chain.hasRepeatedCell()) {
 				chain.addCell(this.cell);
@@ -68,7 +68,7 @@ public class Machine extends Thread {
 			if (!nextCell.isGoal() && !chain.isNextCellACorrectChoice(nextCell)) {
 				nextCell = this.cell.getNextState(nextCell);
 			}
-			
+
 			upgradeCell(this.cell, nextCell);
 			showPath();
 		}
@@ -78,49 +78,50 @@ public class Machine extends Thread {
 		char[][] path = new char[row][col];
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				if(cells[i][j].equals(cell)){
+				if (cells[i][j].equals(cell)) {
 					path[i][j] = getMachineName().toUpperCase().charAt(0);
-				}
-				else
+				} else
 					path[i][j] = cells[i][j].getState().charAt(0);
 			}
 		}
-		
+
 		showPath(path);
 	}
-	
-	public boolean upgradeCell(Cell prevCell, Cell nextCell){
-        if (nextCell.isGoal()) {
-            return true;
-        }
-        
-        setPassed(prevCell);
+
+	public boolean upgradeCell(Cell prevCell, Cell nextCell) {
+		if (nextCell.isGoal()) {
+			return true;
+		}
+
+		setPassed(prevCell);
 		opponent.setEmpty(prevCell);
-		
+
 		this.setCell(nextCell);
-		
+
 		opponent.setGoal(nextCell);
-        return false;
-    }
-	
-	public void showMultiMachine(Machine machine){
+		return false;
+	}
+
+	public void showMultiMachine(Machine machine) {
 		char[][] show = new char[this.row][this.col];
-		
+
 		System.out.printf("Car %s :\n", name);
-		
-		for(int i = 0; i < row; i++){
-			for(int j = 0; j < col; j++){
-				if(cell.getX() == j && cell.getY() == i)
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (cell.getX() == j && cell.getY() == i)
 					show[i][j] = name.toUpperCase().charAt(0);
-				else if(cells[i][j].getState().equals("PASSED"))
+				else if (cells[i][j].getState().equals("PASSED"))
 					show[i][j] = name.charAt(0);
-				else if(machine.getCell().getX() == j && machine.getCell().getY() == i)
-					show[i][j] = machine.getMachineName().toUpperCase().charAt(0);
+				else if (machine.getCell().getX() == j
+						&& machine.getCell().getY() == i)
+					show[i][j] = machine.getMachineName().toUpperCase()
+							.charAt(0);
 				else
 					show[i][j] = cells[i][j].getState().charAt(0);
 			}
 		}
-		
+
 		showPath(show);
 	}
 
@@ -159,84 +160,84 @@ public class Machine extends Thread {
 			}
 		}
 	}
-	
-	public void setBarrier(int x, int y){
+
+	public void setBarrier(int x, int y) {
 		this.cells[y][x].setState("BARRIER");
 	}
-	
-	public void setGoal(int x, int y){
+
+	public void setGoal(int x, int y) {
 		this.cells[y][x].setState("GOAL");
 	}
-	
-	public void setPassed(Cell cell){
+
+	public void setPassed(Cell cell) {
 		this.cells[cell.getY()][cell.getX()].setState("PASSED");
 	}
-	
-	public void setGoal(Cell cell){
+
+	public void setGoal(Cell cell) {
 		this.cells[cell.getY()][cell.getX()].setState("GOAL");
 	}
-	
-	public void setEmpty(Cell cell){
+
+	public void setEmpty(Cell cell) {
 		cells[cell.getY()][cell.getX()].setState("EMPTY");
 	}
-	
-	public void setEmpty(int x, int y){
+
+	public void setEmpty(int x, int y) {
 		cells[y][x].setState("EMPTY");
 	}
 
-	public double getDistanceFrom(Cell cell){
-		return Math.sqrt(Math.pow(this.cell.getX() - cell.getX(), 2) + Math.pow(this.cell.getY() - cell.getY(), 2));
+	public double getDistanceFrom(Cell cell) {
+		return Math.sqrt(Math.pow(this.cell.getX() - cell.getX(), 2)
+				+ Math.pow(this.cell.getY() - cell.getY(), 2));
 	}
 
 	public int getRow() {
 		return row;
 	}
-	
-	public void setRow(int row){
+
+	public void setRow(int row) {
 		this.row = row;
 	}
-	
-	public int getCol(){
+
+	public int getCol() {
 		return col;
 	}
-	
-	public void setCol(int col){
+
+	public void setCol(int col) {
 		this.col = col;
 	}
-	
-	public String getMachineName(){
+
+	public String getMachineName() {
 		return this.name;
 	}
-	
+
 	public void setCells(Cell[][] cells) {
 		this.cells = cells;
 	}
-	
-	public Cell[][] getCells(){
+
+	public Cell[][] getCells() {
 		return this.cells;
 	}
 
 	public void setCell(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
-        cells[y][x].setState(cell.getState());
-        this.cell = cells[y][x];
+		int x = cell.getX();
+		int y = cell.getY();
+		cells[y][x].setState(cell.getState());
+		this.cell = cells[y][x];
 
+	}
 
-    }
-	
-	public Cell getCell(){
+	public Cell getCell() {
 		return this.cell;
 	}
-	
-	public Cell getGoal(){
-		for(int i = 0; i < row; i++){
-			for(int j = 0; j < col; j++){
-				if(cells[i][j].isGoal())
+
+	public Cell getGoal() {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (cells[i][j].isGoal())
 					return cells[i][j];
 			}
 		}
-		
+
 		return null;
 	}
 

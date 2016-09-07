@@ -10,14 +10,14 @@ public class Main {
 	public static void main(String[] args) {
 		int row = Parameters.ROW;
 		int col = Parameters.COL;
-		
+
 		Random random = new Random();
-		
+
 		Machine m = new Machine("mac", null);
 		m.setUpCells();
 		m.setGoal(4, 4);
 		m.setBarrier(3, 3);
-//		m.setBarrier(4, 3);
+		// m.setBarrier(4, 3);
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
@@ -26,8 +26,9 @@ public class Main {
 			int yRandom = random.nextInt(row);
 
 			for (int j = 0; j < 1000; j++) {
-//				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
-				Cell bestCellToGo = m.getCells()[yRandom][xRandom].getBestAction();
+				// System.out.println(j + "\t" + xRandom + "\t" + yRandom);
+				Cell bestCellToGo = m.getCells()[yRandom][xRandom]
+						.getBestAction();
 				m.getCells()[yRandom][xRandom].calculatePoint();
 				xRandom = bestCellToGo.getX();
 				yRandom = bestCellToGo.getY();
@@ -52,7 +53,7 @@ public class Main {
 			}
 		}
 
-//		 Moving the Machine
+		// Moving the Machine
 		showBestPath(m, m.getCells()[0][0]);
 	}
 

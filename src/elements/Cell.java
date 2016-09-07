@@ -9,7 +9,7 @@ public class Cell {
 	private String state;
 
 	private Machine machine;
-	
+
 	private Cell up;
 	private Cell left;
 	private Cell right;
@@ -80,7 +80,7 @@ public class Cell {
 		return this.chooseNearestCellToGoal(cls);
 	}
 
-	public Cell guessOpponentNextAction(){
+	public Cell guessOpponentNextAction() {
 		Cell opponentCell = machine.getOpponent().getCell();
 		double maxPoint = -1000000.0;
 		for (int i = 0; i < opponentCell.actions.length; i++) {
@@ -101,7 +101,8 @@ public class Cell {
 				cls[num++] = opponentCell.actions[i].getFinalCell();
 			}
 		}
-		ArrayList<Cell> nearestCellsToThis = this.chooseNearestCellTo(this, cls);
+		ArrayList<Cell> nearestCellsToThis = this
+				.chooseNearestCellTo(this, cls);
 		return nearestCellsToThis.get(0);
 	}
 
@@ -168,7 +169,7 @@ public class Cell {
 		Cell cell = (Cell) object;
 		if (this.getX() == cell.getX() && this.getY() == cell.getY())
 			return true;
-		
+
 		return false;
 	}
 
@@ -223,15 +224,18 @@ public class Cell {
 	private Cell chooseNearestCellToGoal(Cell[] suggestedCells) {
 		Cell goal = machine.getGoal();
 		Cell opponentNextCell = this.guessOpponentNextAction();
-		if(goal == null) {
+		if (goal == null) {
 			machine.showPath();
 			throw new NullPointerException();
 		}
-		ArrayList<Cell> nearestCellsToGoal = this.chooseNearestCellTo(goal, suggestedCells);
-		ArrayList<Cell> nearestCellsToOpponnetNextCell = this.chooseNearestCellTo(opponentNextCell, suggestedCells);
-		for(int i = 0;i < nearestCellsToGoal.size();i++) {
-			for(int j = 0;j < nearestCellsToOpponnetNextCell.size();j++) {
-				if (nearestCellsToGoal.get(i).equals(nearestCellsToOpponnetNextCell.get(j))) {
+		ArrayList<Cell> nearestCellsToGoal = this.chooseNearestCellTo(goal,
+				suggestedCells);
+		ArrayList<Cell> nearestCellsToOpponnetNextCell = this
+				.chooseNearestCellTo(opponentNextCell, suggestedCells);
+		for (int i = 0; i < nearestCellsToGoal.size(); i++) {
+			for (int j = 0; j < nearestCellsToOpponnetNextCell.size(); j++) {
+				if (nearestCellsToGoal.get(i).equals(
+						nearestCellsToOpponnetNextCell.get(j))) {
 					return nearestCellsToGoal.get(i);
 				}
 			}
@@ -264,31 +268,32 @@ public class Cell {
 		}
 		return bestCells;
 	}
-	public boolean isGoal(){
+
+	public boolean isGoal() {
 		if (getState().equals("GOAL"))
 			return true;
-		
+
 		return false;
 	}
 
-	public boolean isBarrier(){
-		if(getState().equals("BARRIER"))
+	public boolean isBarrier() {
+		if (getState().equals("BARRIER"))
 			return true;
 
 		return false;
 	}
 
-	public boolean isEmpty(){
-		if(getState().equals("EMPTY"))
+	public boolean isEmpty() {
+		if (getState().equals("EMPTY"))
 			return true;
 
 		return false;
 	}
-	
+
 	public boolean isOut() {
-		if(getState().equals("OUT"))
+		if (getState().equals("OUT"))
 			return true;
-		
+
 		return false;
 	}
 }

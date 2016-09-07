@@ -1,6 +1,6 @@
 package learn;
 
-import java.util.ArrayList ;
+import java.util.ArrayList;
 
 import elements.Cell;
 import elements.Parameters;
@@ -40,7 +40,7 @@ public class Chain {
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -84,8 +84,7 @@ public class Chain {
 		}
 		Cell[] newStates = nextCell.getAllPossibleChoices();
 		for (int i = 0; i < newStates.length; i++) {
-			if (!newStates[i].isBarrier()
-					&& !newStates[i].isOut()
+			if (!newStates[i].isBarrier() && !newStates[i].isOut()
 					&& !this.isRepeatedCell(newStates[i])) {
 				return true;
 			}
