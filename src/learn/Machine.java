@@ -69,8 +69,8 @@ public class Machine extends Thread {
 				nextCell = this.cell.getNextState(nextCell);
 			}
 
-			upgradeCell(this.cell, nextCell);
-			showPath();
+            this.cell = nextCell;
+            showPath();
 		}
 	}
 
@@ -92,6 +92,7 @@ public class Machine extends Thread {
 		if (nextCell.isGoal()) {
 			return true;
 		}
+
 
 		setPassed(prevCell);
 		opponent.setEmpty(prevCell);

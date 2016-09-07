@@ -223,6 +223,11 @@ public class Cell {
 
 	private Cell chooseNearestCellToGoal(Cell[] suggestedCells) {
 		Cell goal = machine.getGoal();
+		if (this.machine.getOpponent() == null) {
+			ArrayList<Cell> nearestCellsToGoal = this.chooseNearestCellTo(goal,
+					suggestedCells);
+			return nearestCellsToGoal.get(0);
+		}
 		Cell opponentNextCell = this.guessOpponentNextAction();
 		if (goal == null) {
 			machine.showPath();
