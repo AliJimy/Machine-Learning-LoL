@@ -47,13 +47,6 @@ public class Multi {
 				}
 			}
 
-//			Cell startM = new Cell("EMPTY", 1, m);
-//			Cell startX = new Cell("EMPTY", 5, x);
-//			m.setCell(startM);
-//			x.setCell(startX);
-//			m.setGoal(startX);
-//			x.setGoal(startM);
-
 			chainM.addCell(m.getCell());
 			chainX.addCell(x.getCell());
 
@@ -74,19 +67,16 @@ public class Multi {
 				if (x.upgradeCell(thisX, bestX)) {
 					break;
 				}
-//				if(x.hasReachedToGoal(m))
-//					break;
+				x.showMultiMachine(m);
 				m.getCell().calculatePoint();
 
 				if (m.upgradeCell(thisM, bestM)) {
 					break;
 				}
-//				if(m.hasReachedToGoal(x))
-//					break;
-				
-				x.showMultiMachine(m);
-				
 				m.showMultiMachine(x);
+				
+				if(x.hasReachedToGoal(m))
+					break;
 			}
 			
 			x.showMultiMachine(m);

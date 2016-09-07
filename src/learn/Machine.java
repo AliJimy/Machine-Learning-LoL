@@ -93,7 +93,8 @@ public class Machine extends Thread {
         if (nextCell.isGoal()) {
             return true;
         }
-        setEmpty(prevCell);
+        
+        setPassed(prevCell);
 		opponent.setEmpty(prevCell);
 		
 		this.setCell(nextCell);
@@ -109,10 +110,10 @@ public class Machine extends Thread {
 		
 		for(int i = 0; i < row; i++){
 			for(int j = 0; j < col; j++){
-				if(cells[i][j].getState().equals("PASSED"))
-					show[i][j] = name.charAt(0);
-				else if(cell.getX() == j && cell.getY() == i)
+				if(cell.getX() == j && cell.getY() == i)
 					show[i][j] = name.toUpperCase().charAt(0);
+				else if(cells[i][j].getState().equals("PASSED"))
+					show[i][j] = name.charAt(0);
 				else if(machine.getCell().getX() == j && machine.getCell().getY() == i)
 					show[i][j] = machine.getMachineName().toUpperCase().charAt(0);
 				else
