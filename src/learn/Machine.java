@@ -97,7 +97,7 @@ public class Machine extends Thread {
 		
 		this.cell = nextCell;
 		
-		machine.setGoal(nextCell);
+		machine.setGoal(this.cell);
 	}
 	
 	public void showMultiMachine(Machine machine){
