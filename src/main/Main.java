@@ -15,27 +15,24 @@ public class Main {
 		Machine m = new Machine("mac", null);
 		
 		Parameters.setPointsZero();
-		m.setUpCells();
-		m.setBarrier(3, 3);
-		m.setBarrier(2, 3);
-		
-		
 		
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i = " + i);
 			m.setUpCells();
+			m.setBarrier(4, 3);
 			m.setBarrier(3, 3);
 			m.setBarrier(2, 3);
 			
-			while (m.getCell() == null) {
+			while (m.getCell().isOut()) {
+				System.out.println("Kir tot");
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
 				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
 					m.setCell(cell);
 				}
 			}
 
-			while (m.getGoal() == null) {
+			while (m.getGoal().isOut()) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
 				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
 					m.setGoal(cell);
@@ -48,24 +45,6 @@ public class Main {
 				m.getCell().calculatePoint();
 				m.setCell(bestCellToGo);
 				m.showPath();
-			}
-		}
-
-		double[][][] pointsTable = new double[row][col][4];
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				for (int k = 0; k < 4; k++) {
-					pointsTable[i][j][k] = m.getCells()[i][j].getActions()[k]
-							.getPoint();
-				}
-			}
-		}
-		for (int k = 0; k < 4; k++) {
-			for (int i = 0; i < row; i++) {
-				for (int j = 0; j < col; j++) {
-					System.out.printf("%f\t", pointsTable[i][j][k]);
-				}
-				System.out.println();
 			}
 		}
 
