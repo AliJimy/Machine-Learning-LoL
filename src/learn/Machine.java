@@ -163,6 +163,10 @@ public class Machine extends Thread {
 		this.cells[y][x].setState("GOAL");
 	}
 	
+	public void setPassed(Cell cell){
+		this.cells[cell.getY()][cell.getX()].setState("PASSED");
+	}
+	
 	public void setGoal(Cell cell){
 		this.cells[cell.getY()][cell.getX()].setState("GOAL");
 	}
