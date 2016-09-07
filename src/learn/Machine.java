@@ -89,14 +89,18 @@ public class Machine extends Thread {
 		showPath(path);
 	}
 	
-	public void upgradeCell(Cell prevCell, Cell nextCell){
-		setEmpty(prevCell);
+	public boolean upgradeCell(Cell prevCell, Cell nextCell){
+        if (nextCell.isGoal()) {
+            return true;
+        }
+        setEmpty(prevCell);
 		opponent.setEmpty(prevCell);
 		
 		this.setCell(nextCell);
 		
 		opponent.setGoal(nextCell);
-	}
+        return false;
+    }
 	
 	public void showMultiMachine(Machine machine){
 		char[][] show = new char[this.row][this.col];
