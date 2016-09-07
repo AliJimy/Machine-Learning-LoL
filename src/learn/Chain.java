@@ -84,8 +84,8 @@ public class Chain {
 		}
 		Cell[] newStates = nextCell.getAllPossibleChoices();
 		for (int i = 0; i < newStates.length; i++) {
-			if (!newStates[i].getState().equals("BARRIER")
-					&& !newStates[i].getState().equals("OUT")
+			if (!newStates[i].isBarrier()
+					&& !newStates[i].isOut()
 					&& !this.isRepeatedCell(newStates[i])) {
 				return true;
 			}

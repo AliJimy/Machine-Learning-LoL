@@ -11,29 +11,11 @@ public class Main {
 		int row = Parameters.ROW;
 		int col = Parameters.COL;
 		
-		Cell[][] cells = new Cell[row][col];
-		int number = 1;
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				cells[i][j] = new Cell("EMPTY", number++);
-			}
-		}
-
-		cells[0][1].setState("BARRIER");
-		cells[1][1].setState("BARRIER");
-		cells[2][1].setState("BARRIER");
-		cells[3][2].setState("BARRIER");
-		cells[1][3].setState("BARRIER");
-
-		cells[0][2].setState("GOAL");
-
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				cells[i][j].setSurroundingCells(cells);
-			}
-		}
-
-//		Machine m = new Machine(cells, "mac");
+		Machine m = new Machine("mac");
+		m.setUpCells();
+		m.setGoal(4, 4);
+		m.setBarrier(3, 3);
+		m.setBarrier(4, 3);
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
@@ -42,10 +24,10 @@ public class Main {
 			int yRandom = (new Random().nextInt(row));
 
 			for (int j = 0; j < 1000; j++) {
-				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
-				Cell bestCellToGo = cells[yRandom][xRandom]
-						.getBestAction(cells);
-				cells[yRandom][xRandom].calculatePoint(cells);
+//				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
+				Cell bestCellToGo = m.getCells()[yRandom][xRandom]
+						.getBestAction(m.getCells());
+				m.getCells()[yRandom][xRandom].calculatePoint(m.getCells());
 				xRandom = bestCellToGo.getX();
 				yRandom = bestCellToGo.getY();
 			}
@@ -55,7 +37,7 @@ public class Main {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				for (int k = 0; k < 4; k++) {
-					pointsTable[i][j][k] = cells[i][j].getActions()[k]
+					pointsTable[i][j][k] = m.getCells()[i][j].getActions()[k]
 							.getPoint();
 				}
 			}
@@ -69,12 +51,12 @@ public class Main {
 			}
 		}
 
-		// Moving the Machine
-//		showBestPath(m, cells[0][0]);
+//		 Moving the Machine
+		showBestPath(m, m.getCells()[0][0]);
 	}
 
 	private static void showBestPath(Machine machine, Cell startCell) {
 		machine.setCell(startCell);
-		/* char[][] path = */machine.findBestChain();
+		machine.findBestChain();
 	}
 }

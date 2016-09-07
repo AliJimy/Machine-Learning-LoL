@@ -57,9 +57,8 @@ public class Cell {
 		for (int i = 0; i < this.actions.length; i++) {
 			if (maxPoint < this.actions[i].getPoint()
 					&& this.actions[i].getFinalCell() != null
-					&& !this.actions[i].getFinalCell().getState().equals("OUT")
-					&& !this.actions[i].getFinalCell().getState()
-							.equals("BARRIER")) {
+					&& !this.actions[i].getFinalCell().isOut()
+					&& !this.actions[i].getFinalCell().isBarrier()) {
 				maxPoint = this.actions[i].getPoint();
 			}
 		}
@@ -69,9 +68,8 @@ public class Cell {
 		for (int i = 0; i < this.actions.length; i++) {
 			if (this.actions[i].getPoint() == maxPoint
 					&& this.actions[i].getFinalCell() != null
-					&& !this.actions[i].getFinalCell().getState().equals("OUT")
-					&& !this.actions[i].getFinalCell().getState()
-							.equals("BARRIER")) {
+					&& !this.actions[i].getFinalCell().isOut()
+					&& !this.actions[i].getFinalCell().isBarrier()) {
 				cls[num++] = this.actions[i].getFinalCell();
 			}
 		}
@@ -82,9 +80,8 @@ public class Cell {
 		for (int i = 0; i < this.actions.length; i++) {
 			if (this.actions[i].getPoint() == bestAction
 					&& this.actions[i].getFinalCell() != null
-					&& !this.actions[i].getFinalCell().getState().equals("OUT")
-					&& !this.actions[i].getFinalCell().getState()
-							.equals("BARRIER")
+					&& !this.actions[i].getFinalCell().isOut()
+					&& !this.actions[i].getFinalCell().isBarrier()
 					&& !this.actions[i].getFinalCell().equals(this)) {
 				return this.actions[i].getFinalCell();
 			}
@@ -94,13 +91,13 @@ public class Cell {
 
 	public double getReward() {
 		double reward;
-		if (this.state.equals("BARRIER")) {
+		if (isBarrier()) {
 			reward = -100;
-		} else if (this.state.equals("EMPTY")) {
+		} else if (isEmpty()) {
 			reward = -1;
-		} else if (this.state.equals("OUT")) {
+		} else if (isOut()) {
 			reward = -100;
-		} else if (this.state.equals("GOAL")) {
+		} else if (isGoal()) {
 			reward = 100; // this is for Goal
 		} else if (this.state.equals("PASSED")) {
 			reward = -10;
@@ -129,8 +126,8 @@ public class Cell {
 		Cell bestAcion = this.getBestAction(cells);
 		for (int i = 0; i < this.actions.length; i++) {
 			if (actions[i].getFinalCell().equals(bestAcion)
-					&& !actions[i].getFinalCell().getState().equals("BARRIER")
-					&& !actions[i].getFinalCell().getState().equals("OUT")) {
+					&& !actions[i].getFinalCell().isBarrier()
+					&& !actions[i].getFinalCell().isOut()) {
 				this.actions[i].calculatePoint(cells);
 				return;
 			}
@@ -178,7 +175,7 @@ public class Cell {
 			if (actions[i].getPoint() <= actionPoint
 					&& !actions[i].equals(action)
 					&& actions[i].getFinalCell() != null
-					&& !actions[i].getFinalCell().getState().equals("BARRIER")) {
+					&& !actions[i].getFinalCell().isBarrier()) {
 				return actions[i].getFinalCell();
 			}
 		}
@@ -199,12 +196,16 @@ public class Cell {
 
 		for (int i = 0; i < Parameters.ROW; i++) {
 			for (int j = 0; j < Parameters.COL; j++) {
-				if (cells[i][j].getState().equals("GOAL")) {
+				if (cells[i][j].isGoal()) {
 					goal = cells[i][j];
 					break;
 				}
 			}
 		}
+		
+		if(goal == null)
+			throw new NullPointerException();
+		
 		double[] distances = new double[suggestedCells.length];
 		for (int i = 0; i < suggestedCells.length; i++) {
 			if (suggestedCells[i] == null) {
@@ -227,5 +228,33 @@ public class Cell {
 			}
 		}
 		return bestCells.get(new Random().nextInt(bestCells.size()));
+	}
+	
+	public boolean isGoal(){
+		if (getState().equals("GOAL"))
+			return true;
+		
+		return false;
+	}
+
+	public boolean isBarrier(){
+		if(getState().equals("BARRIER"))
+			return true;
+
+		return false;
+	}
+
+	public boolean isEmpty(){
+		if(getState().equals("EMPTY"))
+			return true;
+
+		return false;
+	}
+	
+	public boolean isOut() {
+		if(getState().equals("OUT"))
+			return true;
+		
+		return false;
 	}
 }
