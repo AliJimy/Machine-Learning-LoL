@@ -4,6 +4,7 @@ import java.util.Random;
 
 import elements.Cell;
 import elements.Parameters;
+import learn.Chain;
 import learn.Machine;
 
 public class Multi {
@@ -20,10 +21,12 @@ public class Multi {
 		x.setOpponent(m);
 
 		// Start Learning
-		for (int i = 0; i < 1000; i++) {
+//		for (int i = 0; i < 1000; i++) {
+			Chain chainM = new Chain();
+			Chain chainX = new Chain();
 			m.setUpCells();
 			x.setUpCells();
-			System.out.println("i = " + i);
+//			System.out.println("i = " + i);
 			
 			while(m.getGoal() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
@@ -40,11 +43,21 @@ public class Multi {
 				}
 			}
 
+			chainM.addCell(m.getCell());
+			chainX.addCell(x.getCell());
+
 			while (true) {
 				Cell bestM = m.getCell().getBestAction();
 				Cell thisM = m.getCell();
 				Cell bestX = x.getCell().getBestAction();
 				Cell thisX = x.getCell();
+
+				if (!chainM.isNextCellACorrectChoice(bestM)) {
+					bestM = m.getCell().getNextState(bestM);
+				}
+				if (!chainX.isNextCellACorrectChoice(bestX)) {
+					bestX = x.getCell().getNextState(bestX);
+				}
 
 				x.upgradeCell(thisX, bestX);
 				m.upgradeCell(thisM, bestM);
@@ -57,7 +70,12 @@ public class Multi {
 
 				if(m.hasReachedToGoal(x) || x.hasReachedToGoal(m))
 					break;
-			}
+				x.showMultiMachine(m);
+				m.showMultiMachine(x);
+//			}
+			
+			x.showMultiMachine(m);
+			m.showMultiMachine(x);
 		}
 	}
 }
