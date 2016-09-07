@@ -32,27 +32,27 @@ public class Multi {
 			x.setUpCells();
 			System.out.println("i = " + i);
 			
-//			while(m.getGoal() == null) {
-//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
-//				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
-//					x.setCell(cell);
-//					m.setGoal(x.getCell());
-//				}
-//			}
-//			while(x.getGoal() == null){
-//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
-//				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
-//					m.setCell(cell);
-//					x.setGoal(m.getCell());
-//				}
-//			}
+			while(m.getGoal() == null) {
+				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
+				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
+					x.setCell(cell);
+					m.setGoal(x.getCell());
+				}
+			}
+			while(x.getGoal() == null){
+				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
+				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
+					m.setCell(cell);
+					x.setGoal(m.getCell());
+				}
+			}
 
-			Cell startM = new Cell("EMPTY", 8, m);
-			Cell startX = new Cell("EMPTY", 18, x);
-			m.setCell(startM);
-			x.setCell(startX);
-			m.setGoal(startX);
-			x.setGoal(startM);
+//			Cell startM = new Cell("EMPTY", 8, m);
+//			Cell startX = new Cell("EMPTY", 18, x);
+//			m.setCell(startM);
+//			x.setCell(startX);
+//			m.setGoal(startX);
+//			x.setGoal(startM);
 
 			chainM.addCell(m.getCell());
 			chainX.addCell(x.getCell());
