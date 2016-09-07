@@ -129,8 +129,8 @@ public class Cell {
 			reward = -100;
 		} else if (isGoal()) {
 			reward = 100; // this is for Goal
-		} else if (this.state.equals("PASSED")) {
-			reward = -10;
+//		} else if (isPassed()) {
+//			reward = -10;
 		} else if (this.state.equals("FOUND")) {
 			reward = 10;
 		} else {
@@ -294,6 +294,13 @@ public class Cell {
 		if (getState().equals("OUT"))
 			return true;
 
+		return false;
+	}
+	
+	public boolean isPassed() {
+		if (getState().equals("PASSED"))
+			return true;
+		
 		return false;
 	}
 }
