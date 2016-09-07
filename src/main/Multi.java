@@ -21,12 +21,12 @@ public class Multi {
 		x.setOpponent(m);
 
 		// Start Learning
-//		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 1000; i++) {
 			Chain chainM = new Chain();
 			Chain chainX = new Chain();
 			m.setUpCells();
 			x.setUpCells();
-//			System.out.println("i = " + i);
+			System.out.println("i = " + i);
 			
 			while(m.getGoal() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
@@ -72,7 +72,7 @@ public class Multi {
 					break;
 				x.showMultiMachine(m);
 				m.showMultiMachine(x);
-//			}
+			}
 			
 			x.showMultiMachine(m);
 			m.showMultiMachine(x);
