@@ -1,6 +1,7 @@
 package elements;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import learn.Action;
 import learn.Machine;
@@ -226,7 +227,7 @@ public class Cell {
 		if (this.machine.getOpponent() == null) {
 			ArrayList<Cell> nearestCellsToGoal = this.chooseNearestCellTo(goal,
 					suggestedCells);
-			return nearestCellsToGoal.get(0);
+			return nearestCellsToGoal.get(new Random().nextInt(nearestCellsToGoal.size()));
 		}
 		Cell opponentNextCell = this.guessOpponentNextAction();
 		if (goal == null) {

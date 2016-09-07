@@ -24,6 +24,7 @@ public class Multi {
 		x.setOpponent(m);
 
 		// Start Learning
+		initializePoints();
 		for (int i = 0; i < 1000; i++) {
 			Chain chainM = new Chain();
 			Chain chainX = new Chain();
@@ -64,12 +65,14 @@ public class Multi {
 				x.getCell().calculatePoint();
 
 				if (x.upgradeCell(thisX, bestX)) {
+					MergePoints(m, x);
 					break;
 				}
 				x.showMultiMachine(m);
 				m.getCell().calculatePoint();
 
 				if (m.upgradeCell(thisM, bestM)) {
+					MergePoints(m, x);
 					break;
 				}
 				m.showMultiMachine(x);
@@ -81,6 +84,42 @@ public class Multi {
 			x.showMultiMachine(m);
 			m.showMultiMachine(x);
 		}
+		showPoints();
+	}
 
+
+	public static void initializePoints(){
+		Parameters.points = new double[Parameters.ROW][Parameters.COL][4];
+		for(int index = 0; index < Parameters.ROW; index++) {
+			for(int j = 0;j < Parameters.COL;j++) {
+				for(int k = 0;k < 4;k++) {
+					Parameters.points[index][j][k] = 0;
+				}
+			}
+		}
+	}
+
+
+	public static void MergePoints(Machine m, Machine x) {
+		for(int index = 0; index < Parameters.ROW; index++) {
+            for(int j = 0;j < Parameters.COL;j++) {
+                for(int k = 0;k < 4;k++) {
+                    Parameters.points[index][j][k] += (x.getCells()[index][j].getActions()[k].getPoint() + m.getCells()[index][j].getActions()[k].getPoint()) / 2;
+                }
+            }
+        }
+	}
+
+
+	public static void showPoints(){
+		for(int k = 0;k < 4;k++) {
+			for(int i = 0; i < Parameters.ROW; i++) {
+				for(int j = 0;j < Parameters.COL;j++) {
+					System.out.print(Parameters.points[i][j][k] + "\t");
+				}
+				System.out.println();
+			}
+			System.out.println("---------------------------------------------------------");
+		}
 	}
 }
