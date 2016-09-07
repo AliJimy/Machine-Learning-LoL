@@ -25,34 +25,34 @@ public class Multi {
 
 
 		// Start Learning
-		for (int i = 0; i < 1000; i++) {
+//		for (int i = 0; i < 1000; i++) {
 			Chain chainM = new Chain();
 			Chain chainX = new Chain();
 			m.setUpCells();
 			x.setUpCells();
-			System.out.println("i = " + i);
+//			System.out.println("i = " + i);
 			
-			while(m.getGoal() == null) {
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
-				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
-					x.setCell(cell);
-					m.setGoal(x.getCell());
-				}
-			}
-			while(x.getGoal() == null){
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
-				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
-					m.setCell(cell);
-					x.setGoal(m.getCell());
-				}
-			}
+//			while(m.getGoal() == null) {
+//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
+//				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
+//					x.setCell(cell);
+//					m.setGoal(x.getCell());
+//				}
+//			}
+//			while(x.getGoal() == null){
+//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
+//				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
+//					m.setCell(cell);
+//					x.setGoal(m.getCell());
+//				}
+//			}
 
-//			Cell startM = new Cell("EMPTY", 8, m);
-//			Cell startX = new Cell("EMPTY", 18, x);
-//			m.setCell(startM);
-//			x.setCell(startX);
-//			m.setGoal(startX);
-//			x.setGoal(startM);
+			Cell startM = new Cell("EMPTY", 1, m);
+			Cell startX = new Cell("EMPTY", 5, x);
+			m.setCell(startM);
+			x.setCell(startX);
+			m.setGoal(startX);
+			x.setGoal(startM);
 
 			chainM.addCell(m.getCell());
 			chainX.addCell(x.getCell());
@@ -69,18 +69,18 @@ public class Multi {
 				if (!chainX.isNextCellACorrectChoice(bestX)) {
 					bestX = x.getCell().getNextState(bestX);
 				}
+				x.getCell().calculatePoint();
 
 				if (x.upgradeCell(thisX, bestX)) {
 					break;
 				}
-				x.getCell().calculatePoint();
 //				if(x.hasReachedToGoal(m))
 //					break;
+				m.getCell().calculatePoint();
 
 				if (m.upgradeCell(thisM, bestM)) {
 					break;
 				}
-				m.getCell().calculatePoint();
 //				if(m.hasReachedToGoal(x))
 //					break;
 				
@@ -91,6 +91,6 @@ public class Multi {
 			
 			x.showMultiMachine(m);
 			m.showMultiMachine(x);
-		}
+//		}
 	}
 }
