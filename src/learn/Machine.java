@@ -18,7 +18,6 @@ public class Machine extends Thread {
 		this.name = name;
 		this.row = Parameters.ROW;
 		this.col = Parameters.COL;
-		this.setUpCells();
 		this.cell = null;
 	}
 

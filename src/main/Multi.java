@@ -16,6 +16,8 @@ public class Multi {
 
 		Machine m = new Machine("mac", null);
 		Machine x = new Machine("xsher", null);
+		
+		Parameters.setPointsZero();
 
 		m.setOpponent(x);
 		x.setOpponent(m);

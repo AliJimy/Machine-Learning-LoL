@@ -1,6 +1,7 @@
 package learn;
 
 import elements.Cell;
+import elements.Parameters;
 
 public class Action {
 	private double point;
@@ -8,22 +9,20 @@ public class Action {
 	private String kind;
 	private Cell sourceCell;
 	private Cell finalCell;
-	private final double alpha = 0.5;
-	private final double gamma = 0.5;
 
 	public Action(Cell sourceCell, Cell finalCell, String kind) {
 		this.sourceCell = sourceCell;
 		this.finalCell = finalCell;
-		this.point = 0;
-		this.numberOfCalls = 0;
 		this.kind = kind;
+		this.point = Parameters.points[sourceCell.getY()][sourceCell.getX()][getIndexAction()];
+		this.numberOfCalls = 0;
 	}
 
 	public void calculatePoint(Machine machine) {
 		this.setPoint(this.point
-				+ alpha
-				* (finalCell.getReward()
-						+ (gamma * sourceCell.getBestAction().getReward()) - this.point));
+				+ Parameters.ALPHA * (finalCell.getReward()
+				+ (Parameters.GAMMA * sourceCell.getBestAction().getReward()) 
+				- this.point));
 		this.numberOfCalls++;
 	}
 
@@ -38,6 +37,19 @@ public class Action {
 		return false;
 	}
 
+	public int getIndexAction(){
+		if(kind.equals("UP"))
+			return 0;
+		else if(kind.equals("RIGHT"))
+			return 1;
+		else if(kind.equals("DOWN"))
+			return 2;
+		else if(kind.equals("LEFT"))
+			return 3;
+		else
+			return -1;
+	}
+	
 	public double getPoint() {
 		return point;
 	}

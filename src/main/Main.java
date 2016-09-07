@@ -13,13 +13,20 @@ public class Main {
 
 		Random random = new Random();
 		Machine m = new Machine("mac", null);
+		
+		Parameters.setPointsZero();
 		m.setUpCells();
 		m.setBarrier(3, 3);
 		m.setBarrier(2, 3);
 		
+		
+		
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i = " + i);
+			m.setUpCells();
+			m.setBarrier(3, 3);
+			m.setBarrier(2, 3);
 			
 			while (m.getCell() == null) {
 				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
