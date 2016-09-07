@@ -38,26 +38,6 @@ public class Machine extends Thread {
 		return null;
 	}
 
-	public String getMachineName(){
-		return this.name;
-	}
-	
-	public void setCells(Cell[][] cells) {
-		this.cells = cells;
-	}
-	
-	public Cell[][] getCells(){
-		return this.cells;
-	}
-
-	public void setCell(Cell cell) {
-		this.cell = cell;
-	}
-	
-	public Cell getCell(){
-		return this.cell;
-	}
-
 	public boolean hasReachedToGoal() {
 		if (this.cell.isGoal()) {
 			return true;
@@ -66,62 +46,59 @@ public class Machine extends Thread {
 		return false;
 	}
 
-	public char[][] findBestChain() {
-		char[][] path = new char[row][col];
+	public boolean hasReachedToGoal(Machine machine){
+		if(this.cell.equals(machine.getCell()))
+			return true;
 		
+		return false;
+	}
+	
+	public void findBestChain() {
 		Chain chain = new Chain();
 		
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				path[i][j] = cells[i][j].getState().charAt(0);
-			}
-		}
-		
 		System.out.printf("First map:\n");
-		showPath(path);
+		showPath();
 		
 		while (!hasReachedToGoal()) {
 			if (!chain.hasRepeatedCell()) {
 				chain.addCell(this.cell);
-				path[this.cell.getY()][this.cell.getX()] = name.charAt(0);
 			}
 
-			Cell nextCell = this.cell.getBestAction(this.cells);
+			Cell nextCell = this.cell.getBestAction(this);
 
 			if (!nextCell.isGoal() && !chain.isNextCellACorrectChoice(nextCell)) {
 				nextCell = this.cell.getNextState(nextCell);
-				if (!chain.isNextCellACorrectChoice(nextCell))
-					continue;
 			}
 			
+			upgradeCell(nextCell, this);
 			this.cell = nextCell;
-			showPath(path);
+			showPath();
 		}
-		return path;
 	}
 
-	public void showPath(char[][] path) {
-		for (int i = 0; i < col; i++) {
-			System.out.printf("\t%d", i);
-		}
-		System.out.println("\n");
-
+	public void showPath() {
+		char[][] path = new char[row][col];
 		for (int i = 0; i < row; i++) {
-			System.out.printf("%d |\t", i);
 			for (int j = 0; j < col; j++) {
-				System.out.print(path[i][j] + "\t");
+				if(cells[i][j].equals(cell)){
+					path[i][j] = getName().toUpperCase().charAt(0);
+					String name = getName();
+				}
+				else
+					path[i][j] = cells[i][j].getState().charAt(0);
 			}
-			System.out.println("\n");
 		}
-		System.out.println();
+		
+		showPath(path);
 	}
 	
-	public void upgradeCell(Cell prevCell, Cell nextCell, Machine machine){
-		cells[prevCell.getY()][prevCell.getX()].setState("PASSED");
+	public void upgradeCell(Cell nextCell, Machine machine){
+		setEmpty(cell);
+		machine.setEmpty(cell);
+		
 		this.cell = nextCell;
-//		machine.getCells()[prevCell.getY()][prevCell.getX()].setState("FOUND");
-		machine.getCells()[prevCell.getY()][prevCell.getX()].setState("EMPTY");
-		machine.setGoal(nextCell.getX(), nextCell.getY());
+		
+		machine.setGoal(nextCell);
 	}
 	
 	public void showMultiMachine(Machine machine){
@@ -145,13 +122,28 @@ public class Machine extends Thread {
 		showPath(show);
 	}
 
+	public void showPath(char[][] path) {
+		for (int i = 0; i < col; i++) {
+			System.out.printf("\t%d", i);
+		}
+		System.out.println("\n");
+
+		for (int i = 0; i < row; i++) {
+			System.out.printf("%d |\t", i);
+			for (int j = 0; j < col; j++) {
+				System.out.print(path[i][j] + "\t");
+			}
+			System.out.println("\n");
+		}
+		System.out.println();
+	}
+
 	public void setUpCells() {
 		cells = new Cell[row][col];
 		int number = 0;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				number++;
-				cells[i][j] = new Cell("EMPTY", number);
+				cells[i][j] = new Cell("EMPTY", ++number);
 			}
 		}
 
@@ -161,7 +153,7 @@ public class Machine extends Thread {
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				cells[i][j].setSurroundingCells(cells);
+				cells[i][j].setSurroundingCells(this);
 			}
 		}
 	}
@@ -173,8 +165,67 @@ public class Machine extends Thread {
 	public void setGoal(int x, int y){
 		this.cells[y][x].setState("GOAL");
 	}
+	
+	public void setGoal(Cell cell){
+		this.cells[cell.getY()][cell.getX()].setState("GOAL");
+	}
+	
+	public void setEmpty(Cell cell){
+		cells[cell.getY()][cell.getX()].setState("EMPTY");
+	}
+	
+	public void setEmpty(int x, int y){
+		cells[y][x].setState("EMPTY");
+	}
 
 	public double getDistanceFrom(Cell cell){
 		return Math.sqrt(Math.pow(this.cell.getX() - cell.getX(), 2) + Math.pow(this.cell.getY() - cell.getY(), 2));
+	}
+
+	public int getRow() {
+		return row;
+	}
+	
+	public void setRow(int row){
+		this.row = row;
+	}
+	
+	public int getCol(){
+		return col;
+	}
+	
+	public void setCol(int col){
+		this.col = col;
+	}
+	
+	public String getMachineName(){
+		return this.name;
+	}
+	
+	public void setCells(Cell[][] cells) {
+		this.cells = cells;
+	}
+	
+	public Cell[][] getCells(){
+		return this.cells;
+	}
+
+	public void setCell(Cell cell) {
+		this.cell = cell;
+	}
+	
+	public Cell getCell(){
+		return this.cell;
+	}
+	
+	public Cell getGoal(){
+		for(int i = 0; i < row; i++){
+			for(int j = 0; j < col; j++){
+				if(cells[i][j].isGoal())
+					return cells[i][j];
+			}
+		}
+		
+		return null;
 	}
 }

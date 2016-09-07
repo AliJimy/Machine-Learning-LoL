@@ -19,10 +19,9 @@ public class Action {
         this.kind = kind;
     }
 
-    public void calculatePoint(Cell[][] cells) {
-        Cell bestAction = this.sourceCell.getBestAction(cells);
+    public void calculatePoint(Machine machine) {
         this.setPoint(this.point + alpha * (finalCell.getReward() +
-        		(gamma * sourceCell.getBestAction(cells).getReward()) - this.point));
+        		(gamma * sourceCell.getBestAction(machine).getReward()) - this.point));
         this.numberOfCalls++;
     }
 

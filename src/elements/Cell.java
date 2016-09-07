@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import learn.Action;
+import learn.Machine;
 
 public class Cell {
 	private String state;
@@ -42,7 +43,8 @@ public class Cell {
 		}
 	}
 
-	public void setSurroundingCells(Cell[][] cells) {
+	public void setSurroundingCells(Machine machine) {
+		Cell[][] cells = machine.getCells();
 		Cell out = new Cell("OUT", -1);
 
 		this.left = (x == 0) ? out : (cells[y][x - 1]);
@@ -52,7 +54,7 @@ public class Cell {
 		this.setActions();
 	}
 
-	public Cell getBestAction(Cell[][] cells) {
+	public Cell getBestAction(Machine machine) {
 		double maxPoint = -1000000.0;
 		for (int i = 0; i < this.actions.length; i++) {
 			if (maxPoint < this.actions[i].getPoint()
@@ -73,7 +75,7 @@ public class Cell {
 				cls[num++] = this.actions[i].getFinalCell();
 			}
 		}
-		return this.chooseNearestCellToGoal(cls, cells);
+		return this.chooseNearestCellToGoal(cls, machine);
 	}
 
 	public Cell getNewState(double bestAction) {
@@ -122,13 +124,13 @@ public class Cell {
 		return y;
 	}
 
-	public void calculatePoint(Cell[][] cells) {
-		Cell bestAcion = this.getBestAction(cells);
+	public void calculatePoint(Machine machine) {
+		Cell bestAcion = this.getBestAction(machine);
 		for (int i = 0; i < this.actions.length; i++) {
 			if (actions[i].getFinalCell().equals(bestAcion)
 					&& !actions[i].getFinalCell().isBarrier()
 					&& !actions[i].getFinalCell().isOut()) {
-				this.actions[i].calculatePoint(cells);
+				this.actions[i].calculatePoint(machine);
 				return;
 			}
 		}
@@ -137,9 +139,9 @@ public class Cell {
 	@Override
 	public boolean equals(Object object) {
 		Cell cell = (Cell) object;
-		if (this.getX() == cell.getX() && this.getY() == cell.getY()) {
+		if (this.getX() == cell.getX() && this.getY() == cell.getY())
 			return true;
-		}
+		
 		return false;
 	}
 
@@ -191,20 +193,13 @@ public class Cell {
 		return cells;
 	}
 
-	private Cell chooseNearestCellToGoal(Cell[] suggestedCells, Cell[][] cells) {
-		Cell goal = null;
-
-		for (int i = 0; i < Parameters.ROW; i++) {
-			for (int j = 0; j < Parameters.COL; j++) {
-				if (cells[i][j].isGoal()) {
-					goal = cells[i][j];
-					break;
-				}
-			}
-		}
+	private Cell chooseNearestCellToGoal(Cell[] suggestedCells, Machine machine) {
+		Cell goal = machine.getGoal();
 		
-		if(goal == null)
+		if(goal == null) {
+			machine.showPath();
 			throw new NullPointerException();
+		}
 		
 		double[] distances = new double[suggestedCells.length];
 		for (int i = 0; i < suggestedCells.length; i++) {

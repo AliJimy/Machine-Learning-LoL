@@ -11,23 +11,25 @@ public class Main {
 		int row = Parameters.ROW;
 		int col = Parameters.COL;
 		
+		Random random = new Random();
+		
 		Machine m = new Machine("mac");
 		m.setUpCells();
 		m.setGoal(4, 4);
 		m.setBarrier(3, 3);
-		m.setBarrier(4, 3);
+//		m.setBarrier(4, 3);
 
 		// Start Learning
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i = " + i);
-			int xRandom = (new Random().nextInt(col));
-			int yRandom = (new Random().nextInt(row));
+			int xRandom = random.nextInt(col);
+			int yRandom = random.nextInt(row);
 
 			for (int j = 0; j < 1000; j++) {
 //				System.out.println(j + "\t" + xRandom + "\t" + yRandom);
 				Cell bestCellToGo = m.getCells()[yRandom][xRandom]
-						.getBestAction(m.getCells());
-				m.getCells()[yRandom][xRandom].calculatePoint(m.getCells());
+						.getBestAction(m);
+				m.getCells()[yRandom][xRandom].calculatePoint(m);
 				xRandom = bestCellToGo.getX();
 				yRandom = bestCellToGo.getY();
 			}

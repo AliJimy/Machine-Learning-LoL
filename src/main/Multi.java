@@ -1,14 +1,17 @@
 package main;
 
+import java.util.Random;
+
 import elements.Cell;
 import elements.Parameters;
-import learn.Chain;
 import learn.Machine;
 
 public class Multi {
 	public static void main(String[] args) {
 		int row = Parameters.ROW;
 		int col = Parameters.COL;
+		
+		Random random = new Random();
 
 		Machine m = new Machine("mac");
 		Machine x = new Machine("xsher");
@@ -18,44 +21,52 @@ public class Multi {
 			m.setUpCells();
 			x.setUpCells();
 			System.out.println("i = " + i);
-			// Cell startM = new Cell("EMPTY", 1 + new Random().nextInt(ROW *
-			// COL));
-			// Cell startX = new Cell("EMPTY", 1 + new Random().nextInt(ROW *
-			// COL));
-			Cell startM = new Cell("EMPTY", 8);
-			Cell startX = new Cell("EMPTY", 18);
-			m.setCell(startM);
-			m.setGoal(startX.getX(), startX.getY());
+			
+			while(m.getGoal() == null) {
+				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1);
+				if(x.getCells()[cell.getY()][cell.getX()].isEmpty()){
+					x.setCell(cell);
+					m.setGoal(x.getCell());
+				}
+			}
+			while(x.getGoal() == null){
+				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1);
+				if(m.getCells()[cell.getY()][cell.getX()].isEmpty()){
+					m.setCell(cell);
+					x.setGoal(m.getCell());
+				}
+			}
+			
 			int xM = m.getCell().getX();
 			int yM = m.getCell().getY();
-
-			x.setCell(startX);
-			x.setGoal(startM.getX(), startM.getY());
+			
 			int xX = x.getCell().getX();
 			int yX = x.getCell().getY();
 
 			while (true) {
-				Cell bestM = m.getCells()[yM][xM].getBestAction(m.getCells());
-				Cell bestX = x.getCells()[yX][xX].getBestAction(x.getCells());
+				Cell bestM = m.getCells()[yM][xM].getBestAction(m);
+				Cell bestX = x.getCells()[yX][xX].getBestAction(x);
 
 				xX = bestX.getX();
 				yX = bestX.getY();
-				x.upgradeCell(x.getCell(), bestX, m);
+				x.upgradeCell(bestX, m);
 
 				xM = bestM.getX();
 				yM = bestM.getY();
-				m.upgradeCell(m.getCell(), bestM, x);
+				m.upgradeCell(bestM, x);
 
-				x.getCells()[yX][xX].calculatePoint(x.getCells());
-				m.getCells()[yM][xM].calculatePoint(m.getCells());
-
-//				x.showMultiMachine(m);
-//				m.showMultiMachine(x);
+				x.getCells()[yX][xX].calculatePoint(x);
+				m.getCells()[yM][xM].calculatePoint(m);
 
 				if (m.hasReachedToGoal() || x.hasReachedToGoal())
 					break;
+				
+				if(m.hasReachedToGoal(x) || x.hasReachedToGoal(m))
+					break;
 			}
-
+			
+			x.showMultiMachine(m);
+			m.showMultiMachine(x);
 		}
 	}
 }
