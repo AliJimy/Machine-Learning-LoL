@@ -23,7 +23,7 @@ public class Multi {
 //			Cell startM = new Cell("EMPTY", 1 + new Random().nextInt(ROW * COL));
 //			Cell startX = new Cell("EMPTY", 1 + new Random().nextInt(ROW * COL));
 			Cell startM = new Cell("EMPTY", 8);
-			Cell startX = new Cell("EMPTY", 12);
+			Cell startX = new Cell("EMPTY", 18);
 			m.setCell(startM);
 			m.getCells()[startX.getY()][startX.getX()].setState("GOAL");
 			int xM = m.getCell().getX();
