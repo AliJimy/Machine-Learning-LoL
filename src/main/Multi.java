@@ -71,13 +71,15 @@ public class Multi {
 				}
 
 				x.upgradeCell(thisX, bestX);
-				m.upgradeCell(thisM, bestM);
-
 				x.getCell().calculatePoint();
-				m.getCell().calculatePoint();
-
-				if(m.hasReachedToGoal(x) || x.hasReachedToGoal(m))
+				if(x.hasReachedToGoal(m))
 					break;
+				
+				m.upgradeCell(thisM, bestM);
+				m.getCell().calculatePoint();
+				if(m.hasReachedToGoal(x))
+					break;
+				
 				x.showMultiMachine(m);
 				m.showMultiMachine(x);
 			}
