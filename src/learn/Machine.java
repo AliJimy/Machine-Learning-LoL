@@ -92,9 +92,7 @@ public class Machine extends Thread {
 	}
 
 	public boolean upgradeCell(Cell prevCell, Cell nextCell) {
-		if (nextCell.isGoal()) {
-			return true;
-		}
+
 
 
 		setPassed(prevCell);
@@ -103,6 +101,9 @@ public class Machine extends Thread {
 		this.setCell(nextCell);
 
 		opponent.setGoal(nextCell);
+        if (opponent.getCell().getBestAction().equals(nextCell)) {
+            return true;
+        }
 		return false;
 	}
 
@@ -252,4 +253,9 @@ public class Machine extends Thread {
 	public Machine getOpponent() {
 		return opponent;
 	}
+
+    public void reset() {
+        this.cell = null;
+        this.cells = null;
+    }
 }

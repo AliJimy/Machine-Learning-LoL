@@ -16,6 +16,7 @@ public class Action {
 		this.kind = kind;
 		this.point = Parameters.points[sourceCell.getY()][sourceCell.getX()][getIndexAction()];
 		this.numberOfCalls = 0;
+//		this.point = 0;
 	}
 
 	public void calculatePoint(Machine machine) {

@@ -27,27 +27,38 @@ public class Multi {
 
 		// Start Learning
 		initializePoints();
-		for (int i = 0; i < 1000; i++) {
+//		for (int i = 0; i < 1000; i++) {
 			Chain chainM = new Chain();
 			Chain chainX = new Chain();
 			m.setUpCells();
 			x.setUpCells();
-			System.out.println("i = " + i);
+//			System.out.println("i = " + i);
+//			if (i == 28) {
+//				System.out.println();
+//			}
 
-			while (m.getGoal() == null) {
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
-				if (x.getCells()[cell.getY()][cell.getX()].isEmpty()) {
-					x.setCell(cell);
-					m.setGoal(x.getCell());
-				}
-			}
-			while (x.getGoal() == null) {
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
-				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
-					m.setCell(cell);
-					x.setGoal(m.getCell());
-				}
-			}
+//			while (m.getGoal() == null) {
+//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
+//				if (x.getCells()[cell.getY()][cell.getX()].isEmpty()) {
+//					x.setCell(cell);
+//					m.setGoal(x.getCell());
+//				}
+//			}
+//			while (x.getGoal() == null) {
+//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
+//				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
+//					m.setCell(cell);
+//					x.setGoal(m.getCell());
+//				}
+//			}
+			Cell startM = new Cell("EMPTY", 1, m);
+			Cell startX = new Cell("EMPTY", 21, x);
+
+			m.setCell(startM);
+			x.setCell(startX);
+
+			m.setGoal(startX);
+			x.setGoal(startM);
 
 			chainM.addCell(m.getCell());
 			chainX.addCell(x.getCell());
@@ -85,8 +96,12 @@ public class Multi {
 
 			x.showMultiMachine(m);
 			m.showMultiMachine(x);
-		}
-		showPoints();
+
+			m.reset();
+
+			x.reset();
+//		}
+//		showPoints();
 	}
 
 
