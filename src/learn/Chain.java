@@ -91,4 +91,8 @@ public class Chain {
 		}
 		return false;
 	}
+
+	public Cell getLastCell(){
+		return cells.get(cells.size() - 1);
+	}
 }

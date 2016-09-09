@@ -3,9 +3,12 @@ package learn;
 import elements.Cell;
 import elements.Parameters;
 
+import java.io.*;
+
 public class Machine extends Thread {
 	private final String name;
 	private Machine opponent;
+    private Chain chain;
 
 	private Cell cell;
 	private Cell[][] cells;
@@ -14,6 +17,7 @@ public class Machine extends Thread {
 	private int col;
 
 	public Machine(String name, Machine opponent) {
+	    chain = new Chain();
 		this.opponent = opponent;
 		this.name = name;
 		this.row = Parameters.ROW;
@@ -101,7 +105,14 @@ public class Machine extends Thread {
 		this.setCell(nextCell);
 
 		opponent.setGoal(nextCell);
-        if (opponent.getCell().getBestAction().equals(nextCell)) {
+        if (this.getGoal() == null) {
+            System.out.println();
+        }
+        if (prevCell.equals(opponent.getCell())) {
+            System.out.println();
+            return true;
+        }
+        if (this.getGoal().equals(nextCell)) {
             return true;
         }
 		return false;
@@ -110,7 +121,7 @@ public class Machine extends Thread {
 	public void showMultiMachine(Machine machine) {
 		char[][] show = new char[this.row][this.col];
 
-		System.out.printf("Car %s :\n", name);
+        writeInFile("Car " + name + " :\n");
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
@@ -126,24 +137,24 @@ public class Machine extends Thread {
 					show[i][j] = cells[i][j].getState().charAt(0);
 			}
 		}
-
 		showPath(show);
 	}
 
 	public void showPath(char[][] path) {
-		for (int i = 0; i < col; i++) {
-			System.out.printf("\t%d", i);
-		}
-		System.out.println("\n");
+
+        for (int i = 0; i < col; i++) {
+            writeInFile("\t" + new Integer(i).toString());
+        }
+		writeInFile("\n\n");
 
 		for (int i = 0; i < row; i++) {
-			System.out.printf("%d |\t", i);
+			writeInFile(new Integer(i).toString() + " |\t");
 			for (int j = 0; j < col; j++) {
-				System.out.print(path[i][j] + "\t");
+				writeInFile(path[i][j] + "\t");
 			}
-			System.out.println("\n");
+			writeInFile("\n\n");
 		}
-		System.out.println();
+		writeInFile("\n");
 	}
 
 	public void setUpCells() {
@@ -242,9 +253,10 @@ public class Machine extends Thread {
 					return cells[i][j];
 			}
 		}
+        this.setGoal(opponent.getCell());
+        return getGoal();
 
-		return null;
-	}
+    }
 
 	public void setOpponent(Machine opponent) {
 		this.opponent = opponent;
@@ -257,5 +269,42 @@ public class Machine extends Thread {
     public void reset() {
         this.cell = null;
         this.cells = null;
+    }
+
+    public void resetGoal(Cell newGoal) {
+        Cell previousGoal = this.getGoal();
+        if (previousGoal != null) {
+            previousGoal.setState("EMPTY");
+        }
+        this.cells[newGoal.getY()][newGoal.getX()].setState(newGoal.getState());
+    }
+
+    public void writeInFile(String message) {
+        PrintWriter writer = null;
+        File file = new File("Data.txt");
+        try {
+            writer = new PrintWriter(new FileWriter(file, true));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        writer.print(message);
+        System.out.print(message);
+        writer.close();
+    }
+
+    public Chain getChain() {
+        return chain;
+    }
+
+    public void setChain(Chain chain) {
+        this.chain = chain;
+    }
+
+    public boolean isNextCellACorrectChoice(Cell bestM) {
+        return this.chain.isNextCellACorrectChoice(bestM);
     }
 }

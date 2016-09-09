@@ -1,5 +1,8 @@
 package main;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 import elements.Cell;
@@ -8,7 +11,8 @@ import learn.Chain;
 import learn.Machine;
 
 public class Multi {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+
 		int row = Parameters.ROW;
 		int col = Parameters.COL;
 
@@ -27,12 +31,10 @@ public class Multi {
 
 		// Start Learning
 		initializePoints();
-//		for (int i = 0; i < 1000; i++) {
-			Chain chainM = new Chain();
-			Chain chainX = new Chain();
+		for (int i = 0; i < 100; i++) {
 			m.setUpCells();
 			x.setUpCells();
-//			System.out.println("i = " + i);
+			m.writeInFile("i = " + i + "\n");
 //			if (i == 28) {
 //				System.out.println();
 //			}
@@ -51,8 +53,16 @@ public class Multi {
 //					x.setGoal(m.getCell());
 //				}
 //			}
-			Cell startM = new Cell("EMPTY", 1, m);
-			Cell startX = new Cell("EMPTY", 21, x);
+
+//			Cell startM = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
+//			Cell startX = new Cell("EMPTY", random.nextInt(row * col) + 1, x);
+
+			Cell startM = new Cell("EMPTY", 7, m);
+			Cell startX = new Cell("EMPTY", 10, x);
+
+			if (m.getCells()[startM.getY()][startM.getX()].isBarrier() || x.getCells()[startX.getY()][startX.getX()].isBarrier()) {
+				continue;
+			}
 
 			m.setCell(startM);
 			x.setCell(startX);
@@ -60,8 +70,8 @@ public class Multi {
 			m.setGoal(startX);
 			x.setGoal(startM);
 
-			chainM.addCell(m.getCell());
-			chainX.addCell(x.getCell());
+			m.getChain().addCell(m.getCell());
+			x.getChain().addCell(x.getCell());
 
 			while (true) {
 				Cell bestM = m.getCell().getBestAction();
@@ -69,10 +79,10 @@ public class Multi {
 				Cell bestX = x.getCell().getBestAction();
 				Cell thisX = x.getCell();
 
-				if (!chainM.isNextCellACorrectChoice(bestM)) {
+				if (!m.isNextCellACorrectChoice(bestM)) {
 					bestM = m.getCell().getNextState(bestM);
 				}
-				if (!chainX.isNextCellACorrectChoice(bestX)) {
+				if (!x.isNextCellACorrectChoice(bestX)) {
 					bestX = x.getCell().getNextState(bestX);
 				}
 				x.getCell().calculatePoint();
@@ -100,8 +110,15 @@ public class Multi {
 			m.reset();
 
 			x.reset();
-//		}
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+		}
 //		showPoints();
+
+
 	}
 
 

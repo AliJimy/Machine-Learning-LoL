@@ -2,8 +2,8 @@ package elements;
 
 public class Parameters {
 	public static double[][][] points;
-	public static int ROW = 8;
-	public static int COL = 8;
+	public static int ROW = 5;
+	public static int COL = 5;
 	public static final double ALPHA = 0.5;
 	public static final double GAMMA = 0.5;
 	

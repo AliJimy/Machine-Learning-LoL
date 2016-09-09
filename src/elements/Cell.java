@@ -104,7 +104,17 @@ public class Cell {
 		}
 		ArrayList<Cell> nearestCellsToThis = this
 				.chooseNearestCellTo(this, cls);
-		return nearestCellsToThis.get(0);
+		if (nearestCellsToThis.size() == 1) {
+			return nearestCellsToThis.get(0);
+		} else{
+			nearestCellsToThis = this.chooseFurtherestCellTo(this.machine.getChain().getLastCell(), nearestCellsToThis);
+			for(int i = 0;i < nearestCellsToThis.size();i++) {
+				if (!opponentCell.machine.getChain().isRepeatedCell(nearestCellsToThis.get(i))) {
+					return nearestCellsToThis.get(i);
+				}
+			}
+			return nearestCellsToThis.get(0);
+		}
 	}
 
 	public Cell getNewState(double bestAction) {
@@ -270,6 +280,27 @@ public class Cell {
 		for (int i = 0; i < distances.length; i++) {
 			if (min == distances[i]) {
 				bestCells.add(suggestedCells[i]);
+			}
+		}
+		return bestCells;
+	}
+
+	public ArrayList<Cell> chooseFurtherestCellTo(Cell cell, ArrayList<Cell> suggestedCells) {
+		double[] distances = new double[suggestedCells.size()];
+		for (int i = 0; i < suggestedCells.size(); i++) {
+			distances[i] = Math.sqrt(Math.pow(cell.x - suggestedCells.get(i).x, 2)
+					+ Math.pow(cell.y - suggestedCells.get(i).y, 2));
+		}
+		double maximumDistance = -1000;
+		for (int i = 0; i < distances.length; i++) {
+			if (maximumDistance < distances[i]) {
+				maximumDistance = distances[i];
+			}
+		}
+		ArrayList<Cell> bestCells = new ArrayList<>();
+		for (int i = 0; i < distances.length; i++) {
+			if (maximumDistance == distances[i]) {
+				bestCells.add(suggestedCells.get(i));
 			}
 		}
 		return bestCells;

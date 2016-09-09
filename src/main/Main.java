@@ -20,24 +20,27 @@ public class Main {
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i = " + i);
 			m.setUpCells();
-			m.setBarrier(4, 3);
-			m.setBarrier(3, 3);
-			m.setBarrier(2, 3);
-			
-			while (m.getCell().isOut()) {
-				System.out.println("Kir tot");
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
-				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
-					m.setCell(cell);
-				}
-			}
+//			m.setBarrier(4, 3);
+//			m.setBarrier(3, 3);
+//			m.setBarrier(2, 3);
+			m.setCell(new Cell("EMPTY", random.nextInt(row * col) + 1, m));
+			m.setGoal(new Cell("GOAL", random.nextInt(row * col) + 1, m));
 
-			while (m.getGoal().isOut()) {
-				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
-				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
-					m.setGoal(cell);
-				}
-			}
+
+			
+//			while (m.getCell().isOut()) {
+//				Cell cell = new Cell("EMPTY", random.nextInt(row * col) + 1, m);
+//				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
+//					m.setCell(cell);
+//				}
+//			}
+//
+//			while (m.getGoal().isOut()) {
+//				Cell cell = new Cell("GOAL", random.nextInt(row * col) + 1, m);
+//				if (m.getCells()[cell.getY()][cell.getX()].isEmpty()) {
+//					m.setGoal(cell);
+//				}
+//			}
 
 			while (m.hasReachedToGoal()) {
 				// System.out.println(j + "\t" + xRandom + "\t" + yRandom);
@@ -53,6 +56,7 @@ public class Main {
 	}
 
 	private static void showBestPath(Machine machine, Cell startCell) {
+		machine.resetGoal(new Cell("GOAL", 25, machine));
 		machine.setCell(startCell);
 		machine.findBestChain();
 	}
