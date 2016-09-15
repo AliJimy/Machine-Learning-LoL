@@ -31,7 +31,7 @@ public class Multi {
 
 		// Start Learning
 		initializePoints();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1; i++) {
 			m.setUpCells();
 			x.setUpCells();
 			m.writeInFile("i = " + i + "\n");
